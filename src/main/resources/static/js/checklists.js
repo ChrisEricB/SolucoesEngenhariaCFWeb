@@ -1,237 +1,772 @@
 /* =====================================================
-   ELEMENTOS GERAIS
+   ELEMENTOS E ESTADO
 ===================================================== */
 
-const botaoMenu = document.getElementById("botaoMenu");
-const menuLateral = document.querySelector(".menu-lateral");
+function obterElemento() {
+    for (
+        let indice = 0;
+        indice < arguments.length;
+        indice++
+    ) {
+        const elemento =
+            document.getElementById(
+                arguments[indice]
+            );
+
+        if (elemento) {
+            return elemento;
+        }
+    }
+
+    return null;
+}
+
+let checklistsCarregados = [];
+let projetosCarregados = [];
+let usuariosCarregados = [];
+let checklistEmEdicaoId = null;
+let temporizadorAviso = null;
+
+const botaoMenu =
+    obterElemento("botaoMenu");
+
+const menuLateral =
+    document.querySelector(".menu-lateral");
 
 const botaoNotificacao =
-    document.getElementById("botaoNotificacao");
+    obterElemento("botaoNotificacao");
 
 const mensagemNotificacao =
-    document.getElementById("mensagemNotificacao");
+    obterElemento("mensagemNotificacao");
 
-const dataAtual = document.getElementById("dataAtual");
+const dataAtual =
+    obterElemento("dataAtual");
 
 const pesquisaChecklist =
-    document.getElementById("pesquisaChecklist");
+    obterElemento("pesquisaChecklist");
 
 const filtroStatusChecklist =
-    document.getElementById("filtroStatusChecklist");
+    obterElemento("filtroStatusChecklist");
 
 const filtroProjetoChecklist =
-    document.getElementById("filtroProjetoChecklist");
+    obterElemento("filtroProjetoChecklist");
 
 const botaoLimparFiltrosChecklist =
-    document.getElementById(
+    obterElemento(
         "botaoLimparFiltrosChecklist"
     );
 
 const listaChecklists =
-    document.getElementById("listaChecklists");
+    obterElemento("listaChecklists");
 
 const mensagemSemChecklists =
-    document.getElementById(
-        "mensagemSemChecklists"
-    );
+    obterElemento("mensagemSemChecklists");
 
-let temporizadorAviso;
+const totalChecklists =
+    obterElemento("totalChecklists");
+
+const checklistsAndamento =
+    obterElemento("checklistsAndamento");
+
+const checklistsConcluidos =
+    obterElemento("checklistsConcluidos");
+
+const checklistsAtrasados =
+    obterElemento("checklistsAtrasados");
 
 /* =====================================================
-   DATA ATUAL
+   DATA, MENU E AVISOS
 ===================================================== */
 
 function mostrarDataAtual() {
+    if (!dataAtual) {
+        return;
+    }
+
     const hoje = new Date();
 
-    const dataFormatada = hoje.toLocaleDateString(
-        "pt-BR",
-        {
-            weekday: "long",
-            day: "2-digit",
-            month: "long",
-            year: "numeric"
-        }
-    );
+    const texto =
+        hoje.toLocaleDateString(
+            "pt-BR",
+            {
+                weekday: "long",
+                day: "2-digit",
+                month: "long",
+                year: "numeric"
+            }
+        );
 
     dataAtual.textContent =
-        dataFormatada.charAt(0).toUpperCase()
-        + dataFormatada.slice(1);
+        texto.charAt(0).toUpperCase()
+        + texto.slice(1);
 }
 
 mostrarDataAtual();
 
-/* =====================================================
-   MENU RESPONSIVO
-===================================================== */
-
-botaoMenu.addEventListener("click", function () {
-    menuLateral.classList.toggle("aberto");
-});
-
-document.addEventListener("keydown", function (evento) {
-    if (evento.key === "Escape") {
-        menuLateral.classList.remove("aberto");
-
-        if (modalChecklist.classList.contains("aberto")) {
-            fecharModalChecklist();
+if (botaoMenu && menuLateral) {
+    botaoMenu.addEventListener(
+        "click",
+        function () {
+            menuLateral.classList.toggle(
+                "aberto"
+            );
         }
-    }
-});
-
-/* =====================================================
-   AVISOS
-===================================================== */
+    );
+}
 
 function mostrarAviso(mensagem) {
+    if (!mensagemNotificacao) {
+        window.alert(mensagem);
+        return;
+    }
+
     clearTimeout(temporizadorAviso);
 
-    mensagemNotificacao.textContent = mensagem;
-    mensagemNotificacao.classList.add("visivel");
+    mensagemNotificacao.textContent =
+        mensagem;
 
-    temporizadorAviso = setTimeout(function () {
-        mensagemNotificacao.classList.remove("visivel");
-    }, 3500);
+    mensagemNotificacao.classList.add(
+        "visivel"
+    );
+
+    temporizadorAviso =
+        setTimeout(
+            function () {
+                mensagemNotificacao
+                    .classList.remove(
+                        "visivel"
+                    );
+            },
+            3500
+        );
 }
 
-botaoNotificacao.addEventListener("click", function () {
-    mostrarAviso(
-        "Você possui 3 notificações relacionadas aos checklists."
+if (botaoNotificacao) {
+    botaoNotificacao.addEventListener(
+        "click",
+        function () {
+            mostrarAviso(
+                "Não existem novas notificações."
+            );
+        }
     );
-});
+}
 
 /* =====================================================
-   PESQUISA E FILTROS
+   FUNÇÕES AUXILIARES
 ===================================================== */
 
-function aplicarFiltrosChecklist() {
-    const termo =
-        pesquisaChecklist.value.trim().toLowerCase();
+function escaparHtml(texto) {
+    const elemento =
+        document.createElement("div");
 
-    const statusSelecionado =
-        filtroStatusChecklist.value;
+    elemento.textContent =
+        texto === null
+        || texto === undefined
+            ? ""
+            : String(texto);
 
-    const projetoSelecionado =
-        filtroProjetoChecklist.value;
+    return elemento.innerHTML;
+}
 
-    const cartoes =
-        listaChecklists.querySelectorAll(
-            ".cartao-checklist"
+function normalizarTexto(texto) {
+    return String(texto || "")
+        .trim()
+        .toLowerCase();
+}
+
+function formatarData(data) {
+    if (!data) {
+        return "-";
+    }
+
+    const partes = data.split("-");
+
+    if (partes.length !== 3) {
+        return data;
+    }
+
+    return partes[2]
+        + "/"
+        + partes[1]
+        + "/"
+        + partes[0];
+}
+
+function nomeStatus(status) {
+    const nomes = {
+        planejado: "Planejado",
+        andamento: "Em andamento",
+        concluido: "Concluído",
+        atrasado: "Atrasado"
+    };
+
+    return nomes[status] || status;
+}
+
+function classeStatus(status) {
+    const classes = {
+        planejado: "planejamento",
+        andamento: "andamento",
+        concluido: "concluido",
+        atrasado: "pendente"
+    };
+
+    return classes[status] || "";
+}
+
+function calcularProgresso(checklist) {
+    const total =
+        Number(checklist.totalItens) || 0;
+
+    const concluidos =
+        Number(checklist.itensConcluidos) || 0;
+
+    if (total <= 0) {
+        return 0;
+    }
+
+    const percentual =
+        Math.round(
+            concluidos / total * 100
         );
 
-    let encontrados = 0;
-
-    cartoes.forEach(function (cartao) {
-        const texto =
-            cartao.textContent.toLowerCase();
-
-        const correspondePesquisa =
-            texto.includes(termo);
-
-        const correspondeStatus =
-            statusSelecionado === "todos"
-            || cartao.dataset.status
-                === statusSelecionado;
-
-        const correspondeProjeto =
-            projetoSelecionado === "todos"
-            || cartao.dataset.projeto
-                === projetoSelecionado;
-
-        const deveAparecer =
-            correspondePesquisa
-            && correspondeStatus
-            && correspondeProjeto;
-
-        cartao.classList.toggle(
-            "oculto",
-            !deveAparecer
-        );
-
-        if (deveAparecer) {
-            encontrados++;
-        }
-    });
-
-    mensagemSemChecklists.classList.toggle(
-        "visivel",
-        encontrados === 0
+    return Math.max(
+        0,
+        Math.min(100, percentual)
     );
 }
 
-pesquisaChecklist.addEventListener(
-    "input",
-    aplicarFiltrosChecklist
-);
+async function obterMensagemErro(
+    resposta,
+    mensagemPadrao
+) {
+    try {
+        const dados =
+            await resposta.json();
 
-filtroStatusChecklist.addEventListener(
-    "change",
-    aplicarFiltrosChecklist
-);
+        return dados.erro
+            || dados.mensagem
+            || mensagemPadrao;
 
-filtroProjetoChecklist.addEventListener(
-    "change",
-    aplicarFiltrosChecklist
-);
-
-botaoLimparFiltrosChecklist.addEventListener(
-    "click",
-    function () {
-        pesquisaChecklist.value = "";
-        filtroStatusChecklist.value = "todos";
-        filtroProjetoChecklist.value = "todos";
-
-        aplicarFiltrosChecklist();
-
-        mostrarAviso(
-            "Os filtros foram removidos."
-        );
+    } catch (erro) {
+        return mensagemPadrao;
     }
-);
+}
+
+function obterChecklistPorId(id) {
+    return checklistsCarregados.find(
+        function (checklist) {
+            return Number(checklist.id)
+                === Number(id);
+        }
+    );
+}
 
 /* =====================================================
-   INDICADORES
+   CONSULTAR APIS
+===================================================== */
+
+async function carregarDados() {
+    try {
+        const respostas =
+            await Promise.all([
+                fetch(
+                    "/api/checklists",
+                    {
+                        credentials:
+                            "same-origin"
+                    }
+                ),
+                fetch(
+                    "/api/projetos",
+                    {
+                        credentials:
+                            "same-origin"
+                    }
+                ),
+                fetch(
+                    "/api/usuarios",
+                    {
+                        credentials:
+                            "same-origin"
+                    }
+                )
+            ]);
+
+        for (
+            let indice = 0;
+            indice < respostas.length;
+            indice++
+        ) {
+            if (!respostas[indice].ok) {
+                throw new Error(
+                    "Não foi possível consultar os dados."
+                );
+            }
+        }
+
+        checklistsCarregados =
+            await respostas[0].json();
+
+        projetosCarregados =
+            await respostas[1].json();
+
+        usuariosCarregados =
+            await respostas[2].json();
+
+        preencherProjetos();
+        preencherResponsaveis();
+        atualizarIndicadores();
+        aplicarFiltrosChecklist();
+
+    } catch (erro) {
+        console.error(erro);
+
+        mostrarAviso(
+            "Erro ao consultar os checklists."
+        );
+    }
+}
+
+/* =====================================================
+   SELECTS DINÂMICOS
+===================================================== */
+
+const projetoChecklist =
+    obterElemento("projetoChecklist");
+
+const responsavelChecklist =
+    obterElemento("responsavelChecklist");
+
+function preencherProjetos() {
+    const valorFormulario =
+        projetoChecklist
+            ? projetoChecklist.value
+            : "";
+
+    const valorFiltro =
+        filtroProjetoChecklist
+            ? filtroProjetoChecklist.value
+            : "todos";
+
+    if (projetoChecklist) {
+        projetoChecklist.innerHTML =
+            '<option value="">'
+            + "Selecione o projeto"
+            + "</option>";
+
+        projetosCarregados.forEach(
+            function (projeto) {
+                const opcao =
+                    document.createElement(
+                        "option"
+                    );
+
+                opcao.value = projeto.id;
+                opcao.textContent =
+                    projeto.nome;
+
+                projetoChecklist.appendChild(
+                    opcao
+                );
+            }
+        );
+
+        projetoChecklist.value =
+            valorFormulario;
+    }
+
+    if (filtroProjetoChecklist) {
+        filtroProjetoChecklist.innerHTML =
+            '<option value="todos">'
+            + "Todos os projetos"
+            + "</option>";
+
+        projetosCarregados.forEach(
+            function (projeto) {
+                const opcao =
+                    document.createElement(
+                        "option"
+                    );
+
+                opcao.value = projeto.id;
+                opcao.textContent =
+                    projeto.nome;
+
+                filtroProjetoChecklist
+                    .appendChild(opcao);
+            }
+        );
+
+        filtroProjetoChecklist.value =
+            valorFiltro;
+    }
+}
+
+function preencherResponsaveis() {
+    if (!responsavelChecklist) {
+        return;
+    }
+
+    const valorAtual =
+        responsavelChecklist.value;
+
+    responsavelChecklist.innerHTML =
+        '<option value="">'
+        + "Selecione o responsável"
+        + "</option>";
+
+    usuariosCarregados
+        .filter(
+            function (usuario) {
+                return usuario.ativo !== false;
+            }
+        )
+        .forEach(
+            function (usuario) {
+                const opcao =
+                    document.createElement(
+                        "option"
+                    );
+
+                opcao.value = usuario.nome;
+                opcao.textContent =
+                    usuario.nome;
+
+                responsavelChecklist
+                    .appendChild(opcao);
+            }
+        );
+
+    responsavelChecklist.value =
+        valorAtual;
+}
+
+/* =====================================================
+   INDICADORES E FILTROS
 ===================================================== */
 
 function atualizarIndicadores() {
-    const cartoes =
-        listaChecklists.querySelectorAll(
-            ".cartao-checklist"
+    const andamento =
+        checklistsCarregados.filter(
+            function (checklist) {
+                return checklist.status
+                    === "andamento";
+            }
+        ).length;
+
+    const concluidos =
+        checklistsCarregados.filter(
+            function (checklist) {
+                return checklist.status
+                    === "concluido";
+            }
+        ).length;
+
+    const atrasados =
+        checklistsCarregados.filter(
+            function (checklist) {
+                return checklist.status
+                    === "atrasado";
+            }
+        ).length;
+
+    if (totalChecklists) {
+        totalChecklists.textContent =
+            checklistsCarregados.length;
+    }
+
+    if (checklistsAndamento) {
+        checklistsAndamento.textContent =
+            andamento;
+    }
+
+    if (checklistsConcluidos) {
+        checklistsConcluidos.textContent =
+            concluidos;
+    }
+
+    if (checklistsAtrasados) {
+        checklistsAtrasados.textContent =
+            atrasados;
+    }
+}
+
+function aplicarFiltrosChecklist() {
+    const termo =
+        pesquisaChecklist
+            ? normalizarTexto(
+                pesquisaChecklist.value
+            )
+            : "";
+
+    const statusSelecionado =
+        filtroStatusChecklist
+            ? filtroStatusChecklist.value
+            : "todos";
+
+    const projetoSelecionado =
+        filtroProjetoChecklist
+            ? filtroProjetoChecklist.value
+            : "todos";
+
+    const filtrados =
+        checklistsCarregados.filter(
+            function (checklist) {
+                const texto =
+                    normalizarTexto(
+                        checklist.titulo
+                        + " "
+                        + checklist.nomeProjeto
+                        + " "
+                        + checklist.responsavel
+                        + " "
+                        + checklist.descricao
+                    );
+
+                const correspondePesquisa =
+                    texto.includes(termo);
+
+                const correspondeStatus =
+                    statusSelecionado
+                        === "todos"
+                    || statusSelecionado
+                        === ""
+                    || checklist.status
+                        === statusSelecionado;
+
+                const correspondeProjeto =
+                    projetoSelecionado
+                        === "todos"
+                    || projetoSelecionado
+                        === ""
+                    || String(
+                        checklist.idProjeto
+                    ) === String(
+                        projetoSelecionado
+                    );
+
+                return correspondePesquisa
+                    && correspondeStatus
+                    && correspondeProjeto;
+            }
         );
 
-    let andamento = 0;
-    let concluidos = 0;
-    let atrasados = 0;
+    renderizarChecklists(filtrados);
+}
 
-    cartoes.forEach(function (cartao) {
-        if (cartao.dataset.status === "andamento") {
-            andamento++;
+if (pesquisaChecklist) {
+    pesquisaChecklist.addEventListener(
+        "input",
+        aplicarFiltrosChecklist
+    );
+}
+
+if (filtroStatusChecklist) {
+    filtroStatusChecklist.addEventListener(
+        "change",
+        aplicarFiltrosChecklist
+    );
+}
+
+if (filtroProjetoChecklist) {
+    filtroProjetoChecklist.addEventListener(
+        "change",
+        aplicarFiltrosChecklist
+    );
+}
+
+if (botaoLimparFiltrosChecklist) {
+    botaoLimparFiltrosChecklist
+        .addEventListener(
+            "click",
+            function () {
+                if (pesquisaChecklist) {
+                    pesquisaChecklist.value =
+                        "";
+                }
+
+                if (filtroStatusChecklist) {
+                    filtroStatusChecklist.value =
+                        "todos";
+                }
+
+                if (filtroProjetoChecklist) {
+                    filtroProjetoChecklist.value =
+                        "todos";
+                }
+
+                aplicarFiltrosChecklist();
+
+                mostrarAviso(
+                    "Os filtros foram removidos."
+                );
+            }
+        );
+}
+
+/* =====================================================
+   RENDERIZAÇÃO DOS CARTÕES
+===================================================== */
+
+function renderizarChecklists(checklists) {
+    if (!listaChecklists) {
+        return;
+    }
+
+    listaChecklists.innerHTML = "";
+
+    checklists.forEach(
+        function (checklist) {
+            const progresso =
+                calcularProgresso(checklist);
+
+            const cartao =
+                document.createElement(
+                    "article"
+                );
+
+            cartao.className =
+                "cartao-checklist";
+
+            cartao.dataset.status =
+                checklist.status;
+
+            cartao.dataset.projeto =
+                checklist.idProjeto;
+
+            const textoPrazo =
+                checklist.status === "atrasado"
+                    ? "Prazo vencido: "
+                    : "Prazo: ";
+
+            const classePrazo =
+                checklist.status === "atrasado"
+                    ? "texto-erro"
+                    : "";
+
+            cartao.innerHTML = `
+                <div class="checklist-cabecalho">
+
+                    <div>
+                        <span
+                            class="status ${classeStatus(
+                                checklist.status
+                            )}"
+                        >
+                            ${escaparHtml(
+                                nomeStatus(
+                                    checklist.status
+                                )
+                            )}
+                        </span>
+
+                        <h2>
+                            ${escaparHtml(
+                                checklist.titulo
+                            )}
+                        </h2>
+
+                        <p>
+                            ${escaparHtml(
+                                checklist.nomeProjeto
+                            )}
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="checklist-progresso">
+
+                    <div
+                        class="checklist-progresso-texto"
+                    >
+                        <span>Progresso</span>
+
+                        <strong>
+                            ${progresso}%
+                        </strong>
+                    </div>
+
+                    <div
+                        class="progresso-linha checklist-barra"
+                    >
+                        <div
+                            class="progresso-barra"
+                            style="width: ${progresso}%;"
+                        ></div>
+                    </div>
+
+                    <small>
+                        ${checklist.itensConcluidos}
+                        de
+                        ${checklist.totalItens}
+                        itens concluídos
+                    </small>
+
+                </div>
+
+                <div class="checklist-informacoes">
+
+                    <span>
+                        Responsável:
+                        ${escaparHtml(
+                            checklist.responsavel
+                        )}
+                    </span>
+
+                    <span class="${classePrazo}">
+                        ${textoPrazo}
+                        ${formatarData(
+                            checklist.prazo
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="checklist-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-secundario abrir-checklist"
+                        data-id="${checklist.id}"
+                    >
+                        Abrir checklist
+                    </button>
+
+                    <button
+                        type="button"
+                        class="botao-tabela editar-checklist"
+                        data-id="${checklist.id}"
+                    >
+                        Editar
+                    </button>
+
+                    <button
+                        type="button"
+                        class="botao-tabela excluir-checklist"
+                        data-id="${checklist.id}"
+                    >
+                        Excluir
+                    </button>
+
+                </div>
+            `;
+
+            listaChecklists.appendChild(
+                cartao
+            );
         }
+    );
 
-        if (cartao.dataset.status === "concluido") {
-            concluidos++;
-        }
-
-        if (cartao.dataset.status === "atrasado") {
-            atrasados++;
-        }
-    });
-
-    document.getElementById(
-        "totalChecklists"
-    ).textContent = cartoes.length;
-
-    document.getElementById(
-        "checklistsAndamento"
-    ).textContent = andamento;
-
-    document.getElementById(
-        "checklistsConcluidos"
-    ).textContent = concluidos;
-
-    document.getElementById(
-        "checklistsAtrasados"
-    ).textContent = atrasados;
+    if (mensagemSemChecklists) {
+        mensagemSemChecklists
+            .classList.toggle(
+                "visivel",
+                checklists.length === 0
+            );
+    }
 }
 
 /* =====================================================
@@ -239,94 +774,116 @@ function atualizarIndicadores() {
 ===================================================== */
 
 const modalChecklist =
-    document.getElementById("modalChecklist");
-
-const fundoModalChecklist =
-    modalChecklist.querySelector(".modal-fundo");
-
-const botaoNovoChecklist =
-    document.getElementById("botaoNovoChecklist");
-
-const botaoFecharChecklist =
-    document.getElementById("botaoFecharChecklist");
-
-const botaoCancelarChecklist =
-    document.getElementById(
-        "botaoCancelarChecklist"
-    );
+    obterElemento("modalChecklist");
 
 const formChecklist =
-    document.getElementById("formChecklist");
+    obterElemento("formChecklist");
+
+const botaoNovoChecklist =
+    obterElemento("botaoNovoChecklist");
+
+const botaoFecharChecklist =
+    obterElemento("botaoFecharChecklist");
+
+const botaoCancelarChecklist =
+    obterElemento("botaoCancelarChecklist");
 
 const tituloModalChecklist =
-    document.getElementById(
-        "tituloModalChecklist"
-    );
+    obterElemento("tituloModalChecklist");
 
 const tituloChecklist =
-    document.getElementById("tituloChecklist");
-
-const projetoChecklist =
-    document.getElementById("projetoChecklist");
-
-const responsavelChecklist =
-    document.getElementById(
-        "responsavelChecklist"
-    );
+    obterElemento("tituloChecklist");
 
 const prazoChecklist =
-    document.getElementById("prazoChecklist");
+    obterElemento("prazoChecklist");
 
 const statusChecklist =
-    document.getElementById("statusChecklist");
+    obterElemento("statusChecklist");
+
+const totalItensChecklist =
+    obterElemento("totalItensChecklist");
+
+const itensConcluidosChecklist =
+    obterElemento(
+        "itensConcluidosChecklist"
+    );
 
 const descricaoChecklist =
-    document.getElementById(
-        "descricaoChecklist"
-    );
+    obterElemento("descricaoChecklist");
 
-const erroTituloChecklist =
-    document.getElementById(
-        "erroTituloChecklist"
-    );
+function abrirModalChecklist(checklist) {
+    if (
+        !modalChecklist
+        || !formChecklist
+        || !tituloChecklist
+        || !projetoChecklist
+        || !responsavelChecklist
+        || !prazoChecklist
+        || !statusChecklist
+        || !totalItensChecklist
+        || !itensConcluidosChecklist
+        || !descricaoChecklist
+    ) {
+        mostrarAviso(
+            "O formulário de checklist está incompleto."
+        );
 
-const erroProjetoChecklist =
-    document.getElementById(
-        "erroProjetoChecklist"
-    );
-
-const erroResponsavelChecklist =
-    document.getElementById(
-        "erroResponsavelChecklist"
-    );
-
-const erroPrazoChecklist =
-    document.getElementById(
-        "erroPrazoChecklist"
-    );
-
-const erroStatusChecklist =
-    document.getElementById(
-        "erroStatusChecklist"
-    );
-
-const erroDescricaoChecklist =
-    document.getElementById(
-        "erroDescricaoChecklist"
-    );
-
-let cartaoEmEdicao = null;
-
-function abrirModalNovoChecklist() {
-    cartaoEmEdicao = null;
-
-    tituloModalChecklist.textContent =
-        "Novo checklist";
+        return;
+    }
 
     formChecklist.reset();
-    limparErrosChecklist();
 
-    modalChecklist.classList.add("aberto");
+    if (checklist) {
+        checklistEmEdicaoId =
+            checklist.id;
+
+        if (tituloModalChecklist) {
+            tituloModalChecklist.textContent =
+                "Editar checklist";
+        }
+
+        tituloChecklist.value =
+            checklist.titulo || "";
+
+        projetoChecklist.value =
+            checklist.idProjeto || "";
+
+        responsavelChecklist.value =
+            checklist.responsavel || "";
+
+        prazoChecklist.value =
+            checklist.prazo || "";
+
+        statusChecklist.value =
+            checklist.status || "";
+
+        totalItensChecklist.value =
+            checklist.totalItens || 1;
+
+        itensConcluidosChecklist.value =
+            checklist.itensConcluidos || 0;
+
+        descricaoChecklist.value =
+            checklist.descricao || "";
+
+    } else {
+        checklistEmEdicaoId = null;
+
+        if (tituloModalChecklist) {
+            tituloModalChecklist.textContent =
+                "Novo checklist";
+        }
+
+        statusChecklist.value =
+            "planejado";
+
+        totalItensChecklist.value = 1;
+        itensConcluidosChecklist.value = 0;
+    }
+
+    modalChecklist.classList.add(
+        "aberto"
+    );
 
     modalChecklist.setAttribute(
         "aria-hidden",
@@ -341,7 +898,13 @@ function abrirModalNovoChecklist() {
 }
 
 function fecharModalChecklist() {
-    modalChecklist.classList.remove("aberto");
+    if (!modalChecklist) {
+        return;
+    }
+
+    modalChecklist.classList.remove(
+        "aberto"
+    );
 
     modalChecklist.setAttribute(
         "aria-hidden",
@@ -352,515 +915,318 @@ function fecharModalChecklist() {
         "modal-aberto"
     );
 
-    formChecklist.reset();
-    limparErrosChecklist();
-
-    cartaoEmEdicao = null;
+    checklistEmEdicaoId = null;
 }
 
-botaoNovoChecklist.addEventListener(
-    "click",
-    abrirModalNovoChecklist
-);
-
-botaoFecharChecklist.addEventListener(
-    "click",
-    fecharModalChecklist
-);
-
-botaoCancelarChecklist.addEventListener(
-    "click",
-    fecharModalChecklist
-);
-
-fundoModalChecklist.addEventListener(
-    "click",
-    fecharModalChecklist
-);
-
-/* =====================================================
-   VALIDAÇÕES
-===================================================== */
-
-function limparErrosChecklist() {
-    const mensagens = [
-        erroTituloChecklist,
-        erroProjetoChecklist,
-        erroResponsavelChecklist,
-        erroPrazoChecklist,
-        erroStatusChecklist,
-        erroDescricaoChecklist
-    ];
-
-    mensagens.forEach(function (mensagem) {
-        mensagem.textContent = "";
-    });
-
-    const campos = [
-        tituloChecklist,
-        projetoChecklist,
-        responsavelChecklist,
-        prazoChecklist,
-        statusChecklist,
-        descricaoChecklist
-    ];
-
-    campos.forEach(function (campo) {
-        campo.classList.remove("campo-invalido");
-    });
+if (botaoNovoChecklist) {
+    botaoNovoChecklist.addEventListener(
+        "click",
+        function () {
+            abrirModalChecklist(null);
+        }
+    );
 }
 
-function marcarErro(campo, erro, mensagem) {
-    campo.classList.add("campo-invalido");
-    erro.textContent = mensagem;
+if (botaoFecharChecklist) {
+    botaoFecharChecklist.addEventListener(
+        "click",
+        fecharModalChecklist
+    );
 }
 
-function validarChecklist() {
-    limparErrosChecklist();
+if (botaoCancelarChecklist) {
+    botaoCancelarChecklist.addEventListener(
+        "click",
+        fecharModalChecklist
+    );
+}
 
-    let formularioValido = true;
-
-    if (tituloChecklist.value.trim() === "") {
-        marcarErro(
-            tituloChecklist,
-            erroTituloChecklist,
-            "Informe o título do checklist."
+if (modalChecklist) {
+    const fundo =
+        modalChecklist.querySelector(
+            ".modal-fundo"
         );
 
-        formularioValido = false;
-
-    } else if (
-        tituloChecklist.value.trim().length < 3
-    ) {
-        marcarErro(
-            tituloChecklist,
-            erroTituloChecklist,
-            "O título deve possuir pelo menos 3 caracteres."
+    if (fundo) {
+        fundo.addEventListener(
+            "click",
+            fecharModalChecklist
         );
-
-        formularioValido = false;
     }
-
-    if (projetoChecklist.value === "") {
-        marcarErro(
-            projetoChecklist,
-            erroProjetoChecklist,
-            "Selecione o projeto."
-        );
-
-        formularioValido = false;
-    }
-
-    if (responsavelChecklist.value === "") {
-        marcarErro(
-            responsavelChecklist,
-            erroResponsavelChecklist,
-            "Selecione o responsável."
-        );
-
-        formularioValido = false;
-    }
-
-    if (prazoChecklist.value === "") {
-        marcarErro(
-            prazoChecklist,
-            erroPrazoChecklist,
-            "Informe o prazo."
-        );
-
-        formularioValido = false;
-    }
-
-    if (statusChecklist.value === "") {
-        marcarErro(
-            statusChecklist,
-            erroStatusChecklist,
-            "Selecione o status."
-        );
-
-        formularioValido = false;
-    }
-
-    if (descricaoChecklist.value.trim() === "") {
-        marcarErro(
-            descricaoChecklist,
-            erroDescricaoChecklist,
-            "Informe uma descrição."
-        );
-
-        formularioValido = false;
-
-    } else if (
-        descricaoChecklist.value.trim().length < 10
-    ) {
-        marcarErro(
-            descricaoChecklist,
-            erroDescricaoChecklist,
-            "A descrição deve possuir pelo menos 10 caracteres."
-        );
-
-        formularioValido = false;
-    }
-
-    return formularioValido;
-}
-
-const camposChecklist = [
-    tituloChecklist,
-    projetoChecklist,
-    responsavelChecklist,
-    prazoChecklist,
-    statusChecklist,
-    descricaoChecklist
-];
-
-camposChecklist.forEach(function (campo) {
-    campo.addEventListener("input", function () {
-        campo.classList.remove("campo-invalido");
-    });
-
-    campo.addEventListener("change", function () {
-        campo.classList.remove("campo-invalido");
-    });
-});
-
-/* =====================================================
-   FUNÇÕES AUXILIARES
-===================================================== */
-
-function formatarData(data) {
-    const partes = data.split("-");
-
-    return partes[2]
-        + "/"
-        + partes[1]
-        + "/"
-        + partes[0];
-}
-
-function converterDataParaCampo(data) {
-    const partes = data.split("/");
-
-    return partes[2]
-        + "-"
-        + partes[1]
-        + "-"
-        + partes[0];
-}
-
-function escaparHtml(texto) {
-    const elemento = document.createElement("div");
-
-    elemento.textContent = texto;
-
-    return elemento.innerHTML;
-}
-
-function obterNomeProjeto(chave) {
-    const projetos = {
-        solar: "Projeto Solar",
-        ampliacao: "Ampliação industrial",
-        modernizacao: "Modernização da fábrica"
-    };
-
-    return projetos[chave];
-}
-
-function obterNomeStatus(status) {
-    const statusNomes = {
-        planejado: "Planejado",
-        andamento: "Em andamento",
-        concluido: "Concluído",
-        atrasado: "Atrasado"
-    };
-
-    return statusNomes[status];
-}
-
-function obterClasseStatus(status) {
-    const classes = {
-        planejado: "planejamento",
-        andamento: "andamento",
-        concluido: "concluido",
-        atrasado: "pendente"
-    };
-
-    return classes[status];
-}
-
-/* =====================================================
-   CRIAR OU ATUALIZAR CARTÃO
-===================================================== */
-
-function preencherCartaoChecklist(cartao) {
-    const titulo = tituloChecklist.value.trim();
-
-    const projeto = projetoChecklist.value;
-
-    const responsavel =
-        responsavelChecklist.value;
-
-    const prazo = prazoChecklist.value;
-
-    const status = statusChecklist.value;
-
-    const descricao =
-        descricaoChecklist.value.trim();
-
-    const progresso =
-        status === "concluido" ? 100 : 0;
-
-    cartao.className = "cartao-checklist";
-
-    cartao.dataset.status = status;
-    cartao.dataset.projeto = projeto;
-    cartao.dataset.descricao = descricao;
-
-    cartao.innerHTML = `
-        <div class="checklist-cabecalho">
-
-            <div>
-                <span class="status ${obterClasseStatus(status)}">
-                    ${obterNomeStatus(status)}
-                </span>
-
-                <h2>${escaparHtml(titulo)}</h2>
-
-                <p>${obterNomeProjeto(projeto)}</p>
-            </div>
-
-            <button
-                type="button"
-                class="botao-opcoes-checklist"
-                aria-label="Opções do checklist"
-            >
-                ⋮
-            </button>
-
-        </div>
-
-        <div class="checklist-progresso">
-
-            <div class="checklist-progresso-texto">
-                <span>Progresso</span>
-                <strong>${progresso}%</strong>
-            </div>
-
-            <div class="progresso-linha checklist-barra">
-
-                <div
-                    class="progresso-barra"
-                    style="width: ${progresso}%;"
-                ></div>
-
-            </div>
-
-            <small>
-                ${
-                    status === "concluido"
-                        ? "Todos os itens concluídos"
-                        : "Nenhum item concluído"
-                }
-            </small>
-
-        </div>
-
-        <div class="checklist-informacoes">
-
-            <span>
-                Responsável: ${escaparHtml(responsavel)}
-            </span>
-
-            <span>
-                Prazo: ${formatarData(prazo)}
-            </span>
-
-        </div>
-
-        <div class="checklist-acoes">
-
-            <button
-                type="button"
-                class="botao-secundario botao-abrir-checklist"
-            >
-                Abrir checklist
-            </button>
-
-            <button
-                type="button"
-                class="botao-tabela editar-checklist"
-            >
-                Editar
-            </button>
-
-        </div>
-    `;
 }
 
 /* =====================================================
    SALVAR CHECKLIST
 ===================================================== */
 
-formChecklist.addEventListener(
-    "submit",
-    function (evento) {
-        evento.preventDefault();
+if (formChecklist) {
+    formChecklist.addEventListener(
+        "submit",
+        async function (evento) {
+            evento.preventDefault();
 
-        if (!validarChecklist()) {
-            mostrarAviso(
-                "Verifique os campos obrigatórios."
-            );
+            const total =
+                Number(
+                    totalItensChecklist.value
+                );
 
-            return;
+            const concluidos =
+                Number(
+                    itensConcluidosChecklist.value
+                );
+
+            if (
+                tituloChecklist.value
+                    .trim().length < 3
+                || projetoChecklist.value === ""
+                || responsavelChecklist.value
+                    === ""
+                || prazoChecklist.value === ""
+                || statusChecklist.value === ""
+                || !Number.isInteger(total)
+                || total < 1
+                || !Number.isInteger(concluidos)
+                || concluidos < 0
+                || concluidos > total
+                || descricaoChecklist.value
+                    .trim().length < 10
+            ) {
+                mostrarAviso(
+                    "Preencha corretamente os campos obrigatórios."
+                );
+
+                return;
+            }
+
+            const checklist = {
+                titulo:
+                    tituloChecklist.value
+                        .trim(),
+
+                idProjeto:
+                    Number(
+                        projetoChecklist.value
+                    ),
+
+                nomeProjeto: null,
+
+                responsavel:
+                    responsavelChecklist.value,
+
+                prazo:
+                    prazoChecklist.value,
+
+                status:
+                    statusChecklist.value,
+
+                descricao:
+                    descricaoChecklist.value
+                        .trim(),
+
+                totalItens:
+                    total,
+
+                itensConcluidos:
+                    concluidos
+            };
+
+            const editando =
+                checklistEmEdicaoId !== null;
+
+            const endereco =
+                editando
+                    ? "/api/checklists/"
+                        + checklistEmEdicaoId
+                    : "/api/checklists";
+
+            try {
+                const resposta =
+                    await fetch(
+                        endereco,
+                        {
+                            method:
+                                editando
+                                    ? "PUT"
+                                    : "POST",
+
+                            credentials:
+                                "same-origin",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    checklist
+                                )
+                        }
+                    );
+
+                if (!resposta.ok) {
+                    const mensagem =
+                        await obterMensagemErro(
+                            resposta,
+                            "Não foi possível salvar o checklist."
+                        );
+
+                    throw new Error(
+                        mensagem
+                    );
+                }
+
+                fecharModalChecklist();
+                await carregarDados();
+
+                mostrarAviso(
+                    editando
+                        ? "Checklist atualizado com sucesso."
+                        : "Checklist cadastrado com sucesso."
+                );
+
+            } catch (erro) {
+                console.error(erro);
+                mostrarAviso(erro.message);
+            }
         }
-
-        if (cartaoEmEdicao) {
-            preencherCartaoChecklist(
-                cartaoEmEdicao
-            );
-
-            mostrarAviso(
-                "Checklist atualizado com sucesso."
-            );
-
-        } else {
-            const novoCartao =
-                document.createElement("article");
-
-            preencherCartaoChecklist(novoCartao);
-
-            listaChecklists.appendChild(
-                novoCartao
-            );
-
-            mostrarAviso(
-                "Checklist cadastrado com sucesso."
-            );
-        }
-
-        fecharModalChecklist();
-        atualizarIndicadores();
-        aplicarFiltrosChecklist();
-    }
-);
+    );
+}
 
 /* =====================================================
-   BOTÕES DOS CARTÕES
+   AÇÕES DOS CARTÕES
 ===================================================== */
 
-listaChecklists.addEventListener(
-    "click",
-    function (evento) {
-        const botao = evento.target;
+if (listaChecklists) {
+    listaChecklists.addEventListener(
+        "click",
+        async function (evento) {
+            const botao =
+                evento.target.closest(
+                    "button"
+                );
 
-        const cartao =
-            botao.closest(".cartao-checklist");
+            if (!botao) {
+                return;
+            }
 
-        if (!cartao) {
-            return;
+            const id =
+                Number(botao.dataset.id);
+
+            const checklist =
+                obterChecklistPorId(id);
+
+            if (!checklist) {
+                mostrarAviso(
+                    "Checklist não encontrado."
+                );
+
+                return;
+            }
+
+            if (
+                botao.classList.contains(
+                    "abrir-checklist"
+                )
+                || botao.classList.contains(
+                    "editar-checklist"
+                )
+            ) {
+                abrirModalChecklist(
+                    checklist
+                );
+
+                return;
+            }
+
+            if (
+                botao.classList.contains(
+                    "excluir-checklist"
+                )
+            ) {
+                await excluirChecklist(
+                    checklist
+                );
+            }
         }
+    );
+}
 
-        const titulo =
-            cartao.querySelector("h2").textContent.trim();
-
-        if (
-            botao.classList.contains(
-                "botao-abrir-checklist"
-            )
-        ) {
-            mostrarAviso(
-                "Abrindo o checklist: " + titulo + "."
-            );
-
-            return;
-        }
-
-        if (
-            botao.classList.contains(
-                "editar-checklist"
-            )
-        ) {
-            abrirEdicaoChecklist(cartao);
-
-            return;
-        }
-
-        if (
-            botao.classList.contains(
-                "botao-opcoes-checklist"
-            )
-        ) {
-            mostrarAviso(
-                "Opções disponíveis para: "
-                + titulo
-                + "."
-            );
-        }
-    }
-);
-
-/* =====================================================
-   EDITAR CHECKLIST
-===================================================== */
-
-function abrirEdicaoChecklist(cartao) {
-    cartaoEmEdicao = cartao;
-
-    tituloModalChecklist.textContent =
-        "Editar checklist";
-
-    limparErrosChecklist();
-
-    tituloChecklist.value =
-        cartao.querySelector("h2").textContent.trim();
-
-    projetoChecklist.value =
-        cartao.dataset.projeto;
-
-    statusChecklist.value =
-        cartao.dataset.status;
-
-    const informacoes =
-        cartao.querySelectorAll(
-            ".checklist-informacoes span"
+async function excluirChecklist(checklist) {
+    const confirmou =
+        window.confirm(
+            'Deseja excluir o checklist "'
+            + checklist.titulo
+            + '"?'
         );
 
-    responsavelChecklist.value =
-        informacoes[0].textContent
-            .replace("Responsável:", "")
-            .trim();
+    if (!confirmou) {
+        return;
+    }
 
-    const textoPrazo =
-        informacoes[1].textContent
-            .replace("Prazo:", "")
-            .replace("Prazo vencido:", "")
-            .replace("Concluído em:", "")
-            .trim();
+    try {
+        const resposta =
+            await fetch(
+                "/api/checklists/"
+                + checklist.id,
+                {
+                    method: "DELETE",
+                    credentials:
+                        "same-origin"
+                }
+            );
 
-    prazoChecklist.value =
-        converterDataParaCampo(textoPrazo);
+        if (!resposta.ok) {
+            const mensagem =
+                await obterMensagemErro(
+                    resposta,
+                    "Não foi possível excluir o checklist."
+                );
 
-    descricaoChecklist.value =
-        cartao.dataset.descricao
-        || "Checklist de verificação do projeto.";
+            throw new Error(mensagem);
+        }
 
-    modalChecklist.classList.add("aberto");
+        await carregarDados();
 
-    modalChecklist.setAttribute(
-        "aria-hidden",
-        "false"
-    );
+        mostrarAviso(
+            "Checklist excluído com sucesso."
+        );
 
-    document.body.classList.add(
-        "modal-aberto"
-    );
-
-    tituloChecklist.focus();
+    } catch (erro) {
+        console.error(erro);
+        mostrarAviso(erro.message);
+    }
 }
+
+/* =====================================================
+   TECLA ESCAPE
+===================================================== */
+
+document.addEventListener(
+    "keydown",
+    function (evento) {
+        if (evento.key !== "Escape") {
+            return;
+        }
+
+        if (menuLateral) {
+            menuLateral.classList.remove(
+                "aberto"
+            );
+        }
+
+        if (
+            modalChecklist
+            && modalChecklist.classList
+                .contains("aberto")
+        ) {
+            fecharModalChecklist();
+        }
+    }
+);
 
 /* =====================================================
    INICIALIZAÇÃO
 ===================================================== */
 
-atualizarIndicadores();
-aplicarFiltrosChecklist();
+carregarDados();

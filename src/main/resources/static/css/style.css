@@ -2296,3 +2296,22 @@ body.modal-aberto {
 .cabecalho-pagina .botao-primario {
     flex-shrink: 0;
 }
+
+/* =====================================================
+   AJUSTES DO MÓDULO DE CHECKLISTS
+===================================================== */
+
+.checklist-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.excluir-checklist {
+    border: 1px solid #efb5b5;
+    color: var(--erro);
+}
+
+.excluir-checklist:hover {
+    background-color: #fff0f0;
+}

@@ -8,9 +8,9 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Checklists | Soluções Engenharia C&F</title>
+    <title>Checklists | Soluções Engenharia C&amp;F</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body class="pagina-sistema">
@@ -22,7 +22,7 @@
             <div class="menu-marca">
 
                 <div class="menu-marca-simbolo">
-                    C&F
+                    C&amp;F
                 </div>
 
                 <div>
@@ -34,32 +34,35 @@
 
             <nav class="menu-navegacao">
 
-                <a href="dashboard.html" class="menu-item">
+                <a href="/dashboard.html" class="menu-item">
                     <span class="menu-icone">▦</span>
                     Dashboard
                 </a>
 
-                <a href="projetos.html" class="menu-item">
+                <a href="/projetos.html" class="menu-item">
                     <span class="menu-icone">▣</span>
                     Projetos
                 </a>
 
-                <a href="auditorias.html" class="menu-item">
+                <a href="/auditorias.html" class="menu-item">
                     <span class="menu-icone">✓</span>
                     Auditorias
                 </a>
 
-                <a href="checklists.html" class="menu-item ativo">
+                <a
+                    href="/checklists.html"
+                    class="menu-item ativo"
+                >
                     <span class="menu-icone">☷</span>
                     Checklists
                 </a>
 
-                <a href="documentos.html" class="menu-item">
+                <a href="/documentos.html" class="menu-item">
                     <span class="menu-icone">▤</span>
                     Documentos
                 </a>
 
-                <a href="usuarios.html" class="menu-item">
+                <a href="/usuarios.html" class="menu-item">
                     <span class="menu-icone">●</span>
                     Usuários
                 </a>
@@ -76,20 +79,21 @@
 
                     <div>
                         <strong data-usuario-nome>
-                        Usuário
+                            Usuário
                         </strong>
 
                         <span data-usuario-perfil>
-                        Perfil
+                            Perfil
                         </span>
-                                                                      
                     </div>
 
                 </div>
 
-                 <a href="#" 
-                   id="botaoSair"
-                   class="botao-sair">
+                <a
+                    href="#"
+                    id="botaoSair"
+                    class="botao-sair"
+                >
                     Sair
                 </a>
 
@@ -119,7 +123,7 @@
                     <input
                         type="search"
                         id="pesquisaChecklist"
-                        placeholder="Pesquisar por título ou projeto..."
+                        placeholder="Pesquisar por título, projeto ou responsável..."
                     >
 
                 </div>
@@ -136,7 +140,10 @@
                         <span>3</span>
                     </button>
 
-                    <div class="data-atual" id="dataAtual"></div>
+                    <div
+                        class="data-atual"
+                        id="dataAtual"
+                    ></div>
 
                 </div>
 
@@ -161,7 +168,7 @@
 
                     <button
                         type="button"
-                        class="botao-acao"
+                        class="botao-primario"
                         id="botaoNovoChecklist"
                     >
                         + Novo checklist
@@ -169,7 +176,9 @@
 
                 </section>
 
-                <section class="grade-indicadores indicadores-checklist">
+                <section
+                    class="grade-indicadores indicadores-checklist"
+                >
 
                     <article class="cartao-indicador">
 
@@ -178,7 +187,9 @@
                             <span class="indicador-icone azul">☷</span>
                         </div>
 
-                        <strong id="totalChecklists">4</strong>
+                        <strong id="totalChecklists">
+                            0
+                        </strong>
 
                         <p>Registros cadastrados</p>
 
@@ -191,7 +202,9 @@
                             <span class="indicador-icone amarelo">◷</span>
                         </div>
 
-                        <strong id="checklistsAndamento">2</strong>
+                        <strong id="checklistsAndamento">
+                            0
+                        </strong>
 
                         <p>Verificações em execução</p>
 
@@ -204,7 +217,9 @@
                             <span class="indicador-icone verde">✓</span>
                         </div>
 
-                        <strong id="checklistsConcluidos">1</strong>
+                        <strong id="checklistsConcluidos">
+                            0
+                        </strong>
 
                         <p>Verificações finalizadas</p>
 
@@ -217,7 +232,9 @@
                             <span class="indicador-icone vermelho">!</span>
                         </div>
 
-                        <strong id="checklistsAtrasados">1</strong>
+                        <strong id="checklistsAtrasados">
+                            0
+                        </strong>
 
                         <p>Necessitam atenção</p>
 
@@ -271,18 +288,6 @@
                                 Todos os projetos
                             </option>
 
-                            <option value="solar">
-                                Projeto Solar
-                            </option>
-
-                            <option value="ampliacao">
-                                Ampliação industrial
-                            </option>
-
-                            <option value="modernizacao">
-                                Modernização da fábrica
-                            </option>
-
                         </select>
 
                     </div>
@@ -297,320 +302,10 @@
 
                 </section>
 
-                <section class="grade-checklists" id="listaChecklists">
-
-                    <article
-                        class="cartao-checklist"
-                        data-status="andamento"
-                        data-projeto="solar"
-                    >
-
-                        <div class="checklist-cabecalho">
-
-                            <div>
-                                <span class="status andamento">
-                                    Em andamento
-                                </span>
-
-                                <h2>Inspeção de instalação elétrica</h2>
-
-                                <p>Projeto Solar</p>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="botao-opcoes-checklist"
-                                aria-label="Opções do checklist"
-                            >
-                                ⋮
-                            </button>
-
-                        </div>
-
-                        <div class="checklist-progresso">
-
-                            <div class="checklist-progresso-texto">
-                                <span>Progresso</span>
-                                <strong>70%</strong>
-                            </div>
-
-                            <div class="progresso-linha checklist-barra">
-                                <div
-                                    class="progresso-barra"
-                                    style="width: 70%;"
-                                ></div>
-                            </div>
-
-                            <small>7 de 10 itens concluídos</small>
-
-                        </div>
-
-                        <div class="checklist-informacoes">
-
-                            <span>
-                                Responsável: Fihama Santos
-                            </span>
-
-                            <span>
-                                Prazo: 05/08/2026
-                            </span>
-
-                        </div>
-
-                        <div class="checklist-acoes">
-
-                            <button
-                                type="button"
-                                class="botao-secundario botao-abrir-checklist"
-                            >
-                                Abrir checklist
-                            </button>
-
-                            <button
-                                type="button"
-                                class="botao-tabela editar-checklist"
-                            >
-                                Editar
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                    <article
-                        class="cartao-checklist"
-                        data-status="planejado"
-                        data-projeto="ampliacao"
-                    >
-
-                        <div class="checklist-cabecalho">
-
-                            <div>
-                                <span class="status planejamento">
-                                    Planejado
-                                </span>
-
-                                <h2>Verificação de equipamentos</h2>
-
-                                <p>Ampliação industrial</p>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="botao-opcoes-checklist"
-                                aria-label="Opções do checklist"
-                            >
-                                ⋮
-                            </button>
-
-                        </div>
-
-                        <div class="checklist-progresso">
-
-                            <div class="checklist-progresso-texto">
-                                <span>Progresso</span>
-                                <strong>0%</strong>
-                            </div>
-
-                            <div class="progresso-linha checklist-barra">
-                                <div
-                                    class="progresso-barra"
-                                    style="width: 0%;"
-                                ></div>
-                            </div>
-
-                            <small>0 de 8 itens concluídos</small>
-
-                        </div>
-
-                        <div class="checklist-informacoes">
-
-                            <span>
-                                Responsável: Christian Barrantes
-                            </span>
-
-                            <span>
-                                Prazo: 12/08/2026
-                            </span>
-
-                        </div>
-
-                        <div class="checklist-acoes">
-
-                            <button
-                                type="button"
-                                class="botao-secundario botao-abrir-checklist"
-                            >
-                                Abrir checklist
-                            </button>
-
-                            <button
-                                type="button"
-                                class="botao-tabela editar-checklist"
-                            >
-                                Editar
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                    <article
-                        class="cartao-checklist"
-                        data-status="concluido"
-                        data-projeto="modernizacao"
-                    >
-
-                        <div class="checklist-cabecalho">
-
-                            <div>
-                                <span class="status concluido">
-                                    Concluído
-                                </span>
-
-                                <h2>Inspeção de segurança</h2>
-
-                                <p>Modernização da fábrica</p>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="botao-opcoes-checklist"
-                                aria-label="Opções do checklist"
-                            >
-                                ⋮
-                            </button>
-
-                        </div>
-
-                        <div class="checklist-progresso">
-
-                            <div class="checklist-progresso-texto">
-                                <span>Progresso</span>
-                                <strong>100%</strong>
-                            </div>
-
-                            <div class="progresso-linha checklist-barra">
-                                <div
-                                    class="progresso-barra"
-                                    style="width: 100%;"
-                                ></div>
-                            </div>
-
-                            <small>12 de 12 itens concluídos</small>
-
-                        </div>
-
-                        <div class="checklist-informacoes">
-
-                            <span>
-                                Responsável: Carlos Barrantes
-                            </span>
-
-                            <span>
-                                Concluído em: 20/07/2026
-                            </span>
-
-                        </div>
-
-                        <div class="checklist-acoes">
-
-                            <button
-                                type="button"
-                                class="botao-secundario botao-abrir-checklist"
-                            >
-                                Visualizar checklist
-                            </button>
-
-                            <button
-                                type="button"
-                                class="botao-tabela editar-checklist"
-                            >
-                                Editar
-                            </button>
-
-                        </div>
-
-                    </article>
-
-                    <article
-                        class="cartao-checklist"
-                        data-status="atrasado"
-                        data-projeto="solar"
-                    >
-
-                        <div class="checklist-cabecalho">
-
-                            <div>
-                                <span class="status pendente">
-                                    Atrasado
-                                </span>
-
-                                <h2>Controle de documentação</h2>
-
-                                <p>Projeto Solar</p>
-                            </div>
-
-                            <button
-                                type="button"
-                                class="botao-opcoes-checklist"
-                                aria-label="Opções do checklist"
-                            >
-                                ⋮
-                            </button>
-
-                        </div>
-
-                        <div class="checklist-progresso">
-
-                            <div class="checklist-progresso-texto">
-                                <span>Progresso</span>
-                                <strong>40%</strong>
-                            </div>
-
-                            <div class="progresso-linha checklist-barra">
-                                <div
-                                    class="progresso-barra"
-                                    style="width: 40%;"
-                                ></div>
-                            </div>
-
-                            <small>4 de 10 itens concluídos</small>
-
-                        </div>
-
-                        <div class="checklist-informacoes">
-
-                            <span>
-                                Responsável: Fihama Santos
-                            </span>
-
-                            <span class="texto-erro">
-                                Prazo vencido: 25/07/2026
-                            </span>
-
-                        </div>
-
-                        <div class="checklist-acoes">
-
-                            <button
-                                type="button"
-                                class="botao-secundario botao-abrir-checklist"
-                            >
-                                Abrir checklist
-                            </button>
-
-                            <button
-                                type="button"
-                                class="botao-tabela editar-checklist"
-                            >
-                                Editar
-                            </button>
-
-                        </div>
-
-                    </article>
-
+                <section
+                    class="grade-checklists"
+                    id="listaChecklists"
+                >
                 </section>
 
                 <div
@@ -620,7 +315,7 @@
                     Nenhum checklist foi encontrado.
                 </div>
 
-                <!-- MODAL NOVO CHECKLIST -->
+                <!-- MODAL CHECKLIST -->
 
                 <div
                     id="modalChecklist"
@@ -660,11 +355,16 @@
 
                         </div>
 
-                        <form id="formChecklist" novalidate>
+                        <form
+                            id="formChecklist"
+                            novalidate
+                        >
 
                             <div class="grade-formulario">
 
-                                <div class="campo-formulario campo-largo">
+                                <div
+                                    class="campo-formulario campo-largo"
+                                >
 
                                     <label for="tituloChecklist">
                                         Título do checklist
@@ -673,7 +373,9 @@
                                     <input
                                         type="text"
                                         id="tituloChecklist"
+                                        maxlength="150"
                                         placeholder="Digite o título"
+                                        required
                                     >
 
                                     <small
@@ -689,24 +391,13 @@
                                         Projeto
                                     </label>
 
-                                    <select id="projetoChecklist">
-
+                                    <select
+                                        id="projetoChecklist"
+                                        required
+                                    >
                                         <option value="">
-                                            Selecione
+                                            Selecione o projeto
                                         </option>
-
-                                        <option value="solar">
-                                            Projeto Solar
-                                        </option>
-
-                                        <option value="ampliacao">
-                                            Ampliação industrial
-                                        </option>
-
-                                        <option value="modernizacao">
-                                            Modernização da fábrica
-                                        </option>
-
                                     </select>
 
                                     <small
@@ -722,24 +413,13 @@
                                         Responsável
                                     </label>
 
-                                    <select id="responsavelChecklist">
-
+                                    <select
+                                        id="responsavelChecklist"
+                                        required
+                                    >
                                         <option value="">
-                                            Selecione
+                                            Selecione o responsável
                                         </option>
-
-                                        <option value="Christian Barrantes">
-                                            Christian Barrantes
-                                        </option>
-
-                                        <option value="Fihama Santos">
-                                            Fihama Santos
-                                        </option>
-
-                                        <option value="Carlos Barrantes">
-                                            Carlos Barrantes
-                                        </option>
-
                                     </select>
 
                                     <small
@@ -758,6 +438,7 @@
                                     <input
                                         type="date"
                                         id="prazoChecklist"
+                                        required
                                     >
 
                                     <small
@@ -773,7 +454,10 @@
                                         Status
                                     </label>
 
-                                    <select id="statusChecklist">
+                                    <select
+                                        id="statusChecklist"
+                                        required
+                                    >
 
                                         <option value="">
                                             Selecione
@@ -804,7 +488,51 @@
 
                                 </div>
 
-                                <div class="campo-formulario campo-largo">
+                                <div class="campo-formulario">
+
+                                    <label for="totalItensChecklist">
+                                        Total de itens
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="totalItensChecklist"
+                                        min="1"
+                                        value="1"
+                                        required
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTotalItensChecklist"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="itensConcluidosChecklist">
+                                        Itens concluídos
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="itensConcluidosChecklist"
+                                        min="0"
+                                        value="0"
+                                        required
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroItensConcluidosChecklist"
+                                    ></small>
+
+                                </div>
+
+                                <div
+                                    class="campo-formulario campo-largo"
+                                >
 
                                     <label for="descricaoChecklist">
                                         Descrição
@@ -813,7 +541,9 @@
                                     <textarea
                                         id="descricaoChecklist"
                                         rows="4"
+                                        maxlength="2000"
                                         placeholder="Descreva o objetivo do checklist"
+                                        required
                                     ></textarea>
 
                                     <small
@@ -862,9 +592,8 @@
 
     </div>
 
-    <script src="js/checklists.js"></script>
     <script src="/js/sessao.js"></script>
-    <script src="/js/dashboard.js"></script>    
+    <script src="/js/checklists.js"></script>
 
 </body>
 </html>
