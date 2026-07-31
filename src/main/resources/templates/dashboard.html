@@ -8,9 +8,12 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Dashboard | Soluções Engenharia C&F</title>
+    <title>Documentos | Soluções Engenharia C&amp;F</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link
+        rel="stylesheet"
+        href="/css/style.css"
+    >
 </head>
 
 <body class="pagina-sistema">
@@ -22,12 +25,17 @@
             <div class="menu-marca">
 
                 <div class="menu-marca-simbolo">
-                    C&F
+                    C&amp;F
                 </div>
 
                 <div>
-                    <strong>Soluções Engenharia</strong>
-                    <span>Gestão integrada</span>
+                    <strong>
+                        Soluções Engenharia
+                    </strong>
+
+                    <span>
+                        Gestão integrada
+                    </span>
                 </div>
 
             </div>
@@ -35,50 +43,68 @@
             <nav class="menu-navegacao">
 
                 <a
-                    href="dashboard.html"
-                    class="menu-item ativo"
+                    href="/dashboard.html"
+                    class="menu-item"
                 >
-                    <span class="menu-icone">▦</span>
+                    <span class="menu-icone">
+                        ▦
+                    </span>
+
                     Dashboard
                 </a>
 
                 <a
-                    href="projetos.html"
+                    href="/projetos.html"
                     class="menu-item"
                 >
-                    <span class="menu-icone">▣</span>
+                    <span class="menu-icone">
+                        ▣
+                    </span>
+
                     Projetos
                 </a>
 
                 <a
-                    href="auditorias.html"
+                    href="/auditorias.html"
                     class="menu-item"
                 >
-                    <span class="menu-icone">✓</span>
+                    <span class="menu-icone">
+                        ✓
+                    </span>
+
                     Auditorias
                 </a>
 
                 <a
-                    href="checklists.html"
+                    href="/checklists.html"
                     class="menu-item"
                 >
-                    <span class="menu-icone">☷</span>
+                    <span class="menu-icone">
+                        ☷
+                    </span>
+
                     Checklists
                 </a>
 
                 <a
-                    href="documentos.html"
-                    class="menu-item"
+                    href="/documentos.html"
+                    class="menu-item ativo"
                 >
-                    <span class="menu-icone">▤</span>
+                    <span class="menu-icone">
+                        ▤
+                    </span>
+
                     Documentos
                 </a>
 
                 <a
-                    href="usuarios.html"
+                    href="/usuarios.html"
                     class="menu-item"
                 >
-                    <span class="menu-icone">●</span>
+                    <span class="menu-icone">
+                        ●
+                    </span>
+
                     Usuários
                 </a>
 
@@ -92,22 +118,23 @@
                         CB
                     </div>
 
-                     <div>
+                    <div>
                         <strong data-usuario-nome>
-                        Usuário
+                            Usuário
                         </strong>
 
                         <span data-usuario-perfil>
-                        Perfil
+                            Perfil
                         </span>
-                                                                      
                     </div>
 
                 </div>
 
-                <a href="#" 
-                   id="botaoSair"
-                   class="botao-sair">
+                <a
+                    href="#"
+                    id="botaoSair"
+                    class="botao-sair"
+                >
                     Sair
                 </a>
 
@@ -130,14 +157,14 @@
 
                 <div class="barra-pesquisa">
 
-                    <label for="pesquisaGeral">
-                        Buscar no sistema
+                    <label for="pesquisaDocumento">
+                        Pesquisar documentos
                     </label>
 
                     <input
                         type="search"
-                        id="pesquisaGeral"
-                        placeholder="Pesquisar projetos, auditorias..."
+                        id="pesquisaDocumento"
+                        placeholder="Pesquisar por título, projeto, arquivo ou responsável..."
                     >
 
                 </div>
@@ -154,7 +181,10 @@
                         <span>3</span>
                     </button>
 
-                    <div class="data-atual" id="dataAtual"></div>
+                    <div
+                        class="data-atual"
+                        id="dataAtual"
+                    ></div>
 
                 </div>
 
@@ -166,269 +196,405 @@
 
                     <div>
                         <p class="pagina-etiqueta">
-                            VISÃO GERAL
+                            ARQUIVOS
                         </p>
 
-                        <h1>Dashboard</h1>
+                        <h1>Documentos</h1>
 
                         <p>
-                            Acompanhe os principais indicadores
-                            e atividades do sistema.
+                            Consulte e organize os arquivos
+                            relacionados aos projetos.
                         </p>
                     </div>
 
-                    <a
-                        href="projetos.html"
-                        class="botao-acao"
+                    <button
+                        type="button"
+                        class="botao-primario"
+                        id="botaoNovoDocumento"
                     >
-                        + Novo projeto
-                    </a>
+                        + Enviar documento
+                    </button>
 
                 </section>
 
-                <section class="grade-indicadores">
+                <section
+                    class="grade-indicadores indicadores-documentos"
+                >
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
-                            <span>Projetos ativos</span>
-                            <span class="indicador-icone azul">▣</span>
+                            <span>
+                                Total de documentos
+                            </span>
+
+                            <span class="indicador-icone azul">
+                                ▤
+                            </span>
                         </div>
 
-                        <strong>8</strong>
+                        <strong id="totalDocumentos">
+                            0
+                        </strong>
 
-                        <p>
-                            <span class="texto-sucesso">+2</span>
-                            no último mês
-                        </p>
+                        <p>Arquivos cadastrados</p>
 
                     </article>
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
-                            <span>Auditorias previstas</span>
-                            <span class="indicador-icone amarelo">✓</span>
+                            <span>
+                                Documentos PDF
+                            </span>
+
+                            <span class="indicador-icone vermelho">
+                                PDF
+                            </span>
                         </div>
 
-                        <strong>5</strong>
+                        <strong id="totalPdf">
+                            0
+                        </strong>
 
-                        <p>Próximos 30 dias</p>
+                        <p>Arquivos em formato PDF</p>
 
                     </article>
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
-                            <span>Não conformidades</span>
-                            <span class="indicador-icone vermelho">!</span>
+                            <span>
+                                Planilhas
+                            </span>
+
+                            <span class="indicador-icone verde">
+                                XLS
+                            </span>
                         </div>
 
-                        <strong>7</strong>
+                        <strong id="totalPlanilhas">
+                            0
+                        </strong>
 
-                        <p>
-                            <span class="texto-erro">3</span>
-                            com prazo próximo
-                        </p>
+                        <p>Arquivos de controle</p>
 
                     </article>
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
-                            <span>Taxa de conclusão</span>
-                            <span class="indicador-icone verde">%</span>
+                            <span>
+                                Outros formatos
+                            </span>
+
+                            <span class="indicador-icone amarelo">
+                                DOC
+                            </span>
                         </div>
 
-                        <strong>72%</strong>
+                        <strong id="totalOutros">
+                            0
+                        </strong>
 
-                        <p>
-                            <span class="texto-sucesso">+5%</span>
-                            em relação ao período anterior
-                        </p>
+                        <p>Documentos complementares</p>
 
                     </article>
 
                 </section>
 
-                <section class="grade-dashboard">
+                <section class="painel-filtros">
 
-                    <article class="painel-dashboard painel-projetos">
+                    <div class="campo-filtro">
 
-                        <div class="painel-cabecalho">
+                        <label for="filtroTipoDocumento">
+                            Tipo de arquivo
+                        </label>
+
+                        <select id="filtroTipoDocumento">
+
+                            <option value="todos">
+                                Todos os tipos
+                            </option>
+
+                            <option value="pdf">
+                                PDF
+                            </option>
+
+                            <option value="planilha">
+                                Planilha
+                            </option>
+
+                            <option value="documento">
+                                Documento de texto
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroProjetoDocumento">
+                            Projeto
+                        </label>
+
+                        <select id="filtroProjetoDocumento">
+
+                            <option value="todos">
+                                Todos os projetos
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-secundario"
+                        id="botaoLimparFiltrosDocumento"
+                    >
+                        Limpar filtros
+                    </button>
+
+                </section>
+
+                <section class="painel-listagem">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h2>
+                                Arquivos cadastrados
+                            </h2>
+
+                            <p id="quantidadeDocumentos">
+                                Carregando documentos...
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="tabela-responsiva">
+
+                        <table
+                            class="tabela-sistema tabela-documentos"
+                        >
+
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Projeto</th>
+                                    <th>Tipo</th>
+                                    <th>Enviado por</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="corpoTabelaDocumentos">
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="mensagemSemDocumentos"
+                        class="mensagem-sem-resultados"
+                    >
+                        Nenhum documento foi encontrado.
+                    </div>
+
+                </section>
+
+                <!-- MODAL DE DOCUMENTO -->
+
+                <div
+                    id="modalDocumento"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalDocumento"
+                    >
+
+                        <div class="modal-cabecalho">
 
                             <div>
-                                <h2>Projetos recentes</h2>
-                                <p>Últimos projetos atualizados</p>
+                                <p class="pagina-etiqueta">
+                                    ARQUIVO
+                                </p>
+
+                                <h2 id="tituloModalDocumento">
+                                    Enviar documento
+                                </h2>
                             </div>
 
-                            <a href="projetos.html">
-                                Ver todos
-                            </a>
+                            <button
+                                type="button"
+                                class="botao-fechar-modal"
+                                id="botaoFecharDocumento"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
 
                         </div>
 
-                        <div class="tabela-responsiva">
+                        <form
+                            id="formDocumento"
+                            enctype="multipart/form-data"
+                            novalidate
+                        >
 
-                            <table class="tabela-sistema">
+                            <div class="grade-formulario">
 
-                                <thead>
-                                    <tr>
-                                        <th>Projeto</th>
-                                        <th>Responsável</th>
-                                        <th>Status</th>
-                                        <th>Progresso</th>
-                                    </tr>
-                                </thead>
+                                <div
+                                    class="campo-formulario campo-largo"
+                                >
 
-                                <tbody>
+                                    <label for="tituloDocumento">
+                                        Título do documento
+                                    </label>
 
-                                    <tr>
-                                        <td>
-                                            <strong>Projeto Solar</strong>
-                                            <span>Energia renovável</span>
-                                        </td>
+                                    <input
+                                        type="text"
+                                        id="tituloDocumento"
+                                        maxlength="150"
+                                        placeholder="Digite um título"
+                                        required
+                                    >
 
-                                        <td>Fihama Santos</td>
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTituloDocumento"
+                                    ></small>
 
-                                        <td>
-                                            <span class="status andamento">
-                                                Em andamento
-                                            </span>
-                                        </td>
+                                </div>
 
-                                        <td>
-                                            <div class="progresso-linha">
-                                                <div
-                                                    class="progresso-barra"
-                                                    style="width: 75%;"
-                                                ></div>
-                                            </div>
-                                            <small>75%</small>
-                                        </td>
-                                    </tr>
+                                <div class="campo-formulario">
 
-                                    <tr>
-                                        <td>
-                                            <strong>Auditoria ISO 9001</strong>
-                                            <span>Qualidade</span>
-                                        </td>
+                                    <label for="projetoDocumento">
+                                        Projeto
+                                    </label>
 
-                                        <td>Carlos Barrantes</td>
+                                    <select
+                                        id="projetoDocumento"
+                                        required
+                                    >
+                                        <option value="">
+                                            Selecione o projeto
+                                        </option>
+                                    </select>
 
-                                        <td>
-                                            <span class="status planejamento">
-                                                Planejamento
-                                            </span>
-                                        </td>
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroProjetoDocumento"
+                                    ></small>
 
-                                        <td>
-                                            <div class="progresso-linha">
-                                                <div
-                                                    class="progresso-barra"
-                                                    style="width: 30%;"
-                                                ></div>
-                                            </div>
-                                            <small>30%</small>
-                                        </td>
-                                    </tr>
+                                </div>
 
-                                    <tr>
-                                        <td>
-                                            <strong>Modernização da fábrica</strong>
-                                            <span>Infraestrutura</span>
-                                        </td>
+                                <div class="campo-formulario">
 
-                                        <td>Christian Barrantes</td>
+                                    <label for="tipoDocumento">
+                                        Tipo
+                                    </label>
 
-                                        <td>
-                                            <span class="status concluido">
-                                                Concluído
-                                            </span>
-                                        </td>
+                                    <select
+                                        id="tipoDocumento"
+                                        required
+                                    >
 
-                                        <td>
-                                            <div class="progresso-linha">
-                                                <div
-                                                    class="progresso-barra"
-                                                    style="width: 100%;"
-                                                ></div>
-                                            </div>
-                                            <small>100%</small>
-                                        </td>
-                                    </tr>
+                                        <option value="">
+                                            Selecione
+                                        </option>
 
-                                </tbody>
+                                        <option value="pdf">
+                                            PDF
+                                        </option>
 
-                            </table>
+                                        <option value="planilha">
+                                            Planilha
+                                        </option>
 
-                        </div>
+                                        <option value="documento">
+                                            Documento de texto
+                                        </option>
 
-                    </article>
+                                    </select>
 
-                    <aside class="painel-dashboard painel-atividades">
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTipoDocumento"
+                                    ></small>
 
-                        <div class="painel-cabecalho">
+                                </div>
 
-                            <div>
-                                <h2>Próximas atividades</h2>
-                                <p>Prazos e compromissos</p>
+                                <div
+                                    class="campo-formulario campo-largo"
+                                >
+
+                                    <label for="arquivoDocumento">
+                                        Selecionar arquivo
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="arquivoDocumento"
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx"
+                                    >
+
+                                    <small class="ajuda-campo">
+                                        Formatos permitidos: PDF, DOC,
+                                        DOCX, XLS e XLSX. Tamanho máximo:
+                                        10 MB.
+                                    </small>
+
+                                    <small
+                                        id="arquivoAtualDocumento"
+                                        class="ajuda-campo"
+                                    ></small>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroArquivoDocumento"
+                                    ></small>
+
+                                </div>
+
                             </div>
 
-                        </div>
+                            <div class="modal-acoes">
 
-                        <div class="lista-atividades">
+                                <button
+                                    type="button"
+                                    class="botao-secundario"
+                                    id="botaoCancelarDocumento"
+                                >
+                                    Cancelar
+                                </button>
 
-                            <article class="atividade">
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Salvar documento
+                                </button>
 
-                                <div class="atividade-data">
-                                    <strong>30</strong>
-                                    <span>JUL</span>
-                                </div>
+                            </div>
 
-                                <div>
-                                    <h3>Auditoria interna</h3>
-                                    <p>Projeto Solar</p>
-                                    <small>09:00</small>
-                                </div>
+                        </form>
 
-                            </article>
+                    </section>
 
-                            <article class="atividade">
-
-                                <div class="atividade-data">
-                                    <strong>05</strong>
-                                    <span>AGO</span>
-                                </div>
-
-                                <div>
-                                    <h3>Prazo de correção</h3>
-                                    <p>Documento vencido</p>
-                                    <small>Até 18:00</small>
-                                </div>
-
-                            </article>
-
-                            <article class="atividade">
-
-                                <div class="atividade-data">
-                                    <strong>12</strong>
-                                    <span>AGO</span>
-                                </div>
-
-                                <div>
-                                    <h3>Reunião de acompanhamento</h3>
-                                    <p>Modernização da fábrica</p>
-                                    <small>14:30</small>
-                                </div>
-
-                            </article>
-
-                        </div>
-
-                    </aside>
-
-                </section>
+                </div>
 
                 <div
                     id="mensagemNotificacao"
@@ -442,9 +608,8 @@
 
     </div>
 
-    <script src="js/dashboard.js"></script>
     <script src="/js/sessao.js"></script>
-    <script src="/js/dashboard.js"></script>
-    
+    <script src="/js/documentos.js"></script>
+
 </body>
 </html>

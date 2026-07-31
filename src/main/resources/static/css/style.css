@@ -2315,3 +2315,29 @@ body.modal-aberto {
 .excluir-checklist:hover {
     background-color: #fff0f0;
 }
+
+/* =====================================================
+   AJUSTES DO MÓDULO DE DOCUMENTOS
+===================================================== */
+
+.documento-identificacao > div {
+    min-width: 0;
+}
+
+.documento-identificacao strong,
+.documento-identificacao span {
+    overflow-wrap: anywhere;
+}
+
+.editar-documento {
+    white-space: nowrap;
+}
+
+.excluir-documento {
+    border: 1px solid #efb5b5;
+    color: var(--erro);
+}
+
+.excluir-documento:hover {
+    background-color: #fff0f0;
+}
