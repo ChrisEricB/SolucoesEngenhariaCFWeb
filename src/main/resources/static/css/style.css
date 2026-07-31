@@ -2146,3 +2146,153 @@ body.modal-aberto {
 .mensagem-login.sucesso {
     color: #25763b;
 }
+
+/* =====================================================
+   AUDITORIAS E NÃO CONFORMIDADES
+===================================================== */
+
+.status-auditoria,
+.status-nao-conformidade,
+.gravidade {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-auditoria.planejada {
+    background-color: #eef3ff;
+    color: #315ea8;
+}
+
+.status-auditoria.andamento {
+    background-color: #fff4dd;
+    color: #8b6300;
+}
+
+.status-auditoria.concluida {
+    background-color: #e8f7ed;
+    color: #25763b;
+}
+
+.status-auditoria.cancelada {
+    background-color: #f1f1f1;
+    color: #666666;
+}
+
+.gravidade.baixa {
+    background-color: #e8f7ed;
+    color: #25763b;
+}
+
+.gravidade.media {
+    background-color: #fff4dd;
+    color: #8b6300;
+}
+
+.gravidade.alta {
+    background-color: #ffe9df;
+    color: #a34819;
+}
+
+.gravidade.critica {
+    background-color: #ffe3e3;
+    color: #a82727;
+}
+
+.status-nao-conformidade.aberta {
+    background-color: #ffe3e3;
+    color: #a82727;
+}
+
+.status-nao-conformidade.analise {
+    background-color: #eef3ff;
+    color: #315ea8;
+}
+
+.status-nao-conformidade.correcao {
+    background-color: #fff4dd;
+    color: #8b6300;
+}
+
+.status-nao-conformidade.resolvida {
+    background-color: #e8f7ed;
+    color: #25763b;
+}
+
+.status-nao-conformidade.cancelada {
+    background-color: #f1f1f1;
+    color: #666666;
+}
+
+.excluir-auditoria,
+.excluir-nc {
+    border: 1px solid #efb5b5;
+    color: var(--erro);
+}
+
+.excluir-auditoria:hover,
+.excluir-nc:hover {
+    background-color: #fff0f0;
+}
+
+.grupo-largura-total {
+    grid-column: 1 / -1;
+}
+
+/* =====================================================
+   BOTÕES PRINCIPAIS
+===================================================== */
+
+.botao-primario {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-height: 44px;
+    padding: 0 18px;
+
+    border: none;
+    border-radius: 10px;
+
+    background-color: #2864f0;
+    color: #ffffff;
+
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 16px rgba(40, 100, 240, 0.22);
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.botao-primario:hover {
+    background-color: #1e52d0;
+
+    box-shadow: 0 8px 20px rgba(40, 100, 240, 0.28);
+
+    transform: translateY(-1px);
+}
+
+.botao-primario:active {
+    transform: translateY(0);
+}
+
+.botao-primario:focus-visible {
+    outline: 3px solid rgba(40, 100, 240, 0.25);
+    outline-offset: 2px;
+}
+
+.cabecalho-pagina .botao-primario {
+    flex-shrink: 0;
+}

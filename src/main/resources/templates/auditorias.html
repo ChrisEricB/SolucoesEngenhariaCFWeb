@@ -10,7 +10,7 @@
 
     <title>Auditorias | Soluções Engenharia C&F</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body class="pagina-sistema">
@@ -34,32 +34,32 @@
 
             <nav class="menu-navegacao">
 
-                <a href="dashboard.html" class="menu-item">
+                <a href="/dashboard.html" class="menu-item">
                     <span class="menu-icone">▦</span>
                     Dashboard
                 </a>
 
-                <a href="projetos.html" class="menu-item">
+                <a href="/projetos.html" class="menu-item">
                     <span class="menu-icone">▣</span>
                     Projetos
                 </a>
 
-                <a href="auditorias.html" class="menu-item ativo">
+                <a href="/auditorias.html" class="menu-item ativo">
                     <span class="menu-icone">✓</span>
                     Auditorias
                 </a>
 
-                <a href="checklists.html" class="menu-item">
+                <a href="/checklists.html" class="menu-item">
                     <span class="menu-icone">☷</span>
                     Checklists
                 </a>
 
-                <a href="documentos.html" class="menu-item">
+                <a href="/documentos.html" class="menu-item">
                     <span class="menu-icone">▤</span>
                     Documentos
                 </a>
 
-                <a href="usuarios.html" class="menu-item">
+                <a href="/usuarios.html" class="menu-item">
                     <span class="menu-icone">●</span>
                     Usuários
                 </a>
@@ -119,7 +119,7 @@
                     <input
                         type="search"
                         id="pesquisaAuditoria"
-                        placeholder="Pesquisar auditorias ou não conformidades..."
+                        placeholder="Pesquisar por título, projeto ou responsável..."
                     >
 
                 </div>
@@ -161,7 +161,7 @@
 
                     <button
                         type="button"
-                        class="botao-acao"
+                        class="botao-primario"
                         id="botaoNovaAuditoria"
                     >
                         + Nova auditoria
@@ -324,7 +324,7 @@
                                 <h2>Auditorias cadastradas</h2>
 
                                 <p id="quantidadeAuditorias">
-                                    4 auditorias encontradas
+                                    Carregando auditorias...
                                 </p>
                             </div>
 
@@ -346,167 +346,7 @@
                                 </thead>
 
                                 <tbody id="corpoTabelaAuditorias">
-
-                                    <tr
-                                        data-status="planejada"
-                                        data-tipo="interna"
-                                    >
-                                        <td>
-                                            <strong>Auditoria de qualidade</strong>
-                                            <span>ISO 9001</span>
-                                        </td>
-
-                                        <td>Projeto Solar</td>
-                                        <td>Interna</td>
-                                        <td>30/07/2026</td>
-
-                                        <td>
-                                            <span class="status planejamento">
-                                                Planejada
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <div class="acoes-tabela">
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela visualizar"
-                                                >
-                                                    Visualizar
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela editar"
-                                                >
-                                                    Editar
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-status="andamento"
-                                        data-tipo="externa"
-                                    >
-                                        <td>
-                                            <strong>Auditoria ambiental</strong>
-                                            <span>ISO 14001</span>
-                                        </td>
-
-                                        <td>Ampliação industrial</td>
-                                        <td>Externa</td>
-                                        <td>25/07/2026</td>
-
-                                        <td>
-                                            <span class="status andamento">
-                                                Em andamento
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <div class="acoes-tabela">
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela visualizar"
-                                                >
-                                                    Visualizar
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela editar"
-                                                >
-                                                    Editar
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-status="concluida"
-                                        data-tipo="interna"
-                                    >
-                                        <td>
-                                            <strong>Auditoria de segurança</strong>
-                                            <span>Procedimentos internos</span>
-                                        </td>
-
-                                        <td>Modernização da fábrica</td>
-                                        <td>Interna</td>
-                                        <td>12/06/2026</td>
-
-                                        <td>
-                                            <span class="status concluido">
-                                                Concluída
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <div class="acoes-tabela">
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela visualizar"
-                                                >
-                                                    Visualizar
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela editar"
-                                                >
-                                                    Editar
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-status="planejada"
-                                        data-tipo="externa"
-                                    >
-                                        <td>
-                                            <strong>Auditoria documental</strong>
-                                            <span>Controle de registros</span>
-                                        </td>
-
-                                        <td>Auditoria ISO 9001</td>
-                                        <td>Externa</td>
-                                        <td>08/08/2026</td>
-
-                                        <td>
-                                            <span class="status planejamento">
-                                                Planejada
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <div class="acoes-tabela">
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela visualizar"
-                                                >
-                                                    Visualizar
-                                                </button>
-
-                                                <button
-                                                    type="button"
-                                                    class="botao-tabela editar"
-                                                >
-                                                    Editar
-                                                </button>
-
-                                            </div>
-                                        </td>
-                                    </tr>
-
+                             
                                 </tbody>
 
                             </table>
@@ -544,7 +384,7 @@
 
                         <button
                             type="button"
-                            class="botao-acao"
+                            class="botao-primario"
                             id="botaoNovaNaoConformidade"
                         >
                             + Nova não conformidade
@@ -556,11 +396,25 @@
 
                         <div class="campo-filtro">
 
-                            <label for="filtroSituacaoNc">
+                            <label for="pesquisaNaoConformidade">
+                                Pesquisar
+                            </label>
+
+                            <input
+                                type="search"
+                                id="pesquisaNaoConformidade"
+                                placeholder="Título, descrição ou responsável..."
+                            >
+
+                        </div>
+
+                        <div class="campo-filtro">
+
+                            <label for="filtroStatusNaoConformidade">
                                 Situação
                             </label>
 
-                            <select id="filtroSituacaoNc">
+                            <select id="filtroStatusNaoConformidade">
 
                                 <option value="todos">
                                     Todas as situações
@@ -570,12 +424,20 @@
                                     Aberta
                                 </option>
 
-                                <option value="tratamento">
-                                    Em tratamento
+                                <option value="analise">
+                                    Em análise
+                                </option>
+
+                                <option value="correcao">
+                                    Em correção
                                 </option>
 
                                 <option value="resolvida">
                                     Resolvida
+                                </option>
+
+                                <option value="cancelada">
+                                    Cancelada
                                 </option>
 
                             </select>
@@ -584,11 +446,11 @@
 
                         <div class="campo-filtro">
 
-                            <label for="filtroGravidadeNc">
+                            <label for="filtroGravidade">
                                 Gravidade
                             </label>
 
-                            <select id="filtroGravidadeNc">
+                            <select id="filtroGravidade">
 
                                 <option value="todos">
                                     Todas as gravidades
@@ -606,6 +468,10 @@
                                     Alta
                                 </option>
 
+                                <option value="critica">
+                                    Crítica
+                                </option>
+
                             </select>
 
                         </div>
@@ -613,7 +479,7 @@
                         <button
                             type="button"
                             class="botao-secundario"
-                            id="botaoLimparFiltrosNc"
+                            id="botaoLimparFiltrosNaoConformidade"
                         >
                             Limpar filtros
                         </button>
@@ -627,8 +493,8 @@
                             <div>
                                 <h2>Ocorrências</h2>
 
-                                <p id="quantidadeNc">
-                                    4 ocorrências encontradas
+                                <p id="quantidadeNaoConformidades">
+                                    Carregando não conformidades...
                                 </p>
                             </div>
 
@@ -641,164 +507,24 @@
                                 <thead>
                                     <tr>
                                         <th>Não conformidade</th>
-                                        <th>Origem</th>
+                                        <th>Auditoria</th>
                                         <th>Gravidade</th>
-                                        <th>Prazo</th>
                                         <th>Situação</th>
+                                        <th>Responsável</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
 
-                                <tbody id="corpoTabelaNc">
-
-                                    <tr
-                                        data-situacao="aberta"
-                                        data-gravidade="alta"
-                                    >
-                                        <td>
-                                            <strong>Documento desatualizado</strong>
-                                            <span>NC-001</span>
-                                        </td>
-
-                                        <td>Auditoria de qualidade</td>
-
-                                        <td>
-                                            <span class="gravidade alta">
-                                                Alta
-                                            </span>
-                                        </td>
-
-                                        <td>05/08/2026</td>
-
-                                        <td>
-                                            <span class="status pendente">
-                                                Aberta
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="botao-tabela visualizar"
-                                            >
-                                                Visualizar
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-situacao="tratamento"
-                                        data-gravidade="media"
-                                    >
-                                        <td>
-                                            <strong>Falha no registro de inspeção</strong>
-                                            <span>NC-002</span>
-                                        </td>
-
-                                        <td>Auditoria ambiental</td>
-
-                                        <td>
-                                            <span class="gravidade media">
-                                                Média
-                                            </span>
-                                        </td>
-
-                                        <td>10/08/2026</td>
-
-                                        <td>
-                                            <span class="status andamento">
-                                                Em tratamento
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="botao-tabela visualizar"
-                                            >
-                                                Visualizar
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-situacao="resolvida"
-                                        data-gravidade="baixa"
-                                    >
-                                        <td>
-                                            <strong>Identificação incompleta</strong>
-                                            <span>NC-003</span>
-                                        </td>
-
-                                        <td>Auditoria de segurança</td>
-
-                                        <td>
-                                            <span class="gravidade baixa">
-                                                Baixa
-                                            </span>
-                                        </td>
-
-                                        <td>18/06/2026</td>
-
-                                        <td>
-                                            <span class="status concluido">
-                                                Resolvida
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="botao-tabela visualizar"
-                                            >
-                                                Visualizar
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                    <tr
-                                        data-situacao="aberta"
-                                        data-gravidade="media"
-                                    >
-                                        <td>
-                                            <strong>Ausência de assinatura</strong>
-                                            <span>NC-004</span>
-                                        </td>
-
-                                        <td>Auditoria documental</td>
-
-                                        <td>
-                                            <span class="gravidade media">
-                                                Média
-                                            </span>
-                                        </td>
-
-                                        <td>15/08/2026</td>
-
-                                        <td>
-                                            <span class="status pendente">
-                                                Aberta
-                                            </span>
-                                        </td>
-
-                                        <td>
-                                            <button
-                                                type="button"
-                                                class="botao-tabela visualizar"
-                                            >
-                                                Visualizar
-                                            </button>
-                                        </td>
-                                    </tr>
-
-                                </tbody>
+                            <tbody id="corpoTabelaNaoConformidades">
+                            
+                            </tbody>    
 
                             </table>
 
                         </div>
 
                         <div
-                            id="mensagemSemNc"
+                            id="mensagemSemNaoConformidades"
                             class="mensagem-sem-resultados"
                         >
                             Nenhuma não conformidade foi encontrada.
@@ -840,7 +566,7 @@
                             <button
                                 type="button"
                                 class="botao-fechar-modal"
-                                id="botaoFecharAuditoria"
+                                id="botaoFecharModalAuditoria"
                                 aria-label="Fechar formulário"
                             >
                                 ×
@@ -854,19 +580,21 @@
 
                                 <div class="campo-formulario campo-largo">
 
-                                    <label for="nomeAuditoria">
-                                        Nome da auditoria
+                                    <label for="tituloAuditoria">
+                                        Título da auditoria
                                     </label>
 
                                     <input
                                         type="text"
-                                        id="nomeAuditoria"
-                                        placeholder="Digite o nome da auditoria"
+                                        id="tituloAuditoria"
+                                        maxlength="150"
+                                        placeholder="Digite o título da auditoria"
+                                        required
                                     >
 
                                     <small
                                         class="mensagem-erro"
-                                        id="erroNomeAuditoria"
+                                        id="erroTituloAuditoria"
                                     ></small>
 
                                 </div>
@@ -877,22 +605,10 @@
                                         Projeto
                                     </label>
 
-                                    <select id="projetoAuditoria">
+                                    <select id="projetoAuditoria" required>
 
                                         <option value="">
-                                            Selecione
-                                        </option>
-
-                                        <option value="Projeto Solar">
-                                            Projeto Solar
-                                        </option>
-
-                                        <option value="Ampliação industrial">
-                                            Ampliação industrial
-                                        </option>
-
-                                        <option value="Modernização da fábrica">
-                                            Modernização da fábrica
+                                            Selecione o projeto
                                         </option>
 
                                     </select>
@@ -910,7 +626,7 @@
                                         Tipo
                                     </label>
 
-                                    <select id="tipoAuditoria">
+                                    <select id="tipoAuditoria" required>
 
                                         <option value="">
                                             Selecione
@@ -924,11 +640,44 @@
                                             Externa
                                         </option>
 
+                                        <option value="qualidade">
+                                            Qualidade
+                                        </option>
+
+                                        <option value="seguranca">
+                                            Segurança
+                                        </option>
+
+                                        <option value="ambiental">
+                                            Ambiental
+                                        </option>
+
                                     </select>
 
                                     <small
                                         class="mensagem-erro"
                                         id="erroTipoAuditoria"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="responsavelAuditoria">
+                                        Responsável
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="responsavelAuditoria"
+                                        maxlength="150"
+                                        placeholder="Digite o responsável"
+                                        required
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroResponsavelAuditoria"
                                     ></small>
 
                                 </div>
@@ -942,6 +691,7 @@
                                     <input
                                         type="date"
                                         id="dataAuditoria"
+                                        required
                                     >
 
                                     <small
@@ -957,7 +707,7 @@
                                         Status
                                     </label>
 
-                                    <select id="statusAuditoria">
+                                    <select id="statusAuditoria" required>
 
                                         <option value="">
                                             Selecione
@@ -975,12 +725,31 @@
                                             Concluída
                                         </option>
 
+                                        <option value="cancelada">
+                                            Cancelada
+                                        </option>
+
                                     </select>
 
                                     <small
                                         class="mensagem-erro"
                                         id="erroStatusAuditoria"
                                     ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="observacoesAuditoria">
+                                        Observações
+                                    </label>
+
+                                    <textarea
+                                        id="observacoesAuditoria"
+                                        rows="4"
+                                        maxlength="2000"
+                                        placeholder="Digite observações sobre a auditoria"
+                                    ></textarea>
 
                                 </div>
 
@@ -1011,6 +780,256 @@
 
                 </div>
 
+<!-- MODAL NÃO CONFORMIDADE -->
+
+                <div
+                    id="modalNaoConformidade"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalNaoConformidade"
+                    >
+
+                        <div class="modal-cabecalho">
+
+                            <div>
+                                <p class="pagina-etiqueta">
+                                    CONTROLE DE QUALIDADE
+                                </p>
+
+                                <h2 id="tituloModalNaoConformidade">
+                                    Nova não conformidade
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                id="botaoFecharModalNaoConformidade"
+                                class="botao-fechar-modal"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                        <form id="formNaoConformidade" novalidate>
+
+                            <div class="grade-formulario">
+
+                                <div class="campo-formulario">
+
+                                    <label for="auditoriaNaoConformidade">
+                                        Auditoria
+                                    </label>
+
+                                    <select
+                                        id="auditoriaNaoConformidade"
+                                        required
+                                    >
+                                        <option value="">
+                                            Selecione a auditoria
+                                        </option>
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroAuditoriaNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="tituloNaoConformidade">
+                                        Título
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="tituloNaoConformidade"
+                                        maxlength="150"
+                                        placeholder="Digite o título da ocorrência"
+                                        required
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTituloNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="gravidadeNaoConformidade">
+                                        Gravidade
+                                    </label>
+
+                                    <select
+                                        id="gravidadeNaoConformidade"
+                                        required
+                                    >
+                                        <option value="">
+                                            Selecione
+                                        </option>
+                                        <option value="baixa">Baixa</option>
+                                        <option value="media">Média</option>
+                                        <option value="alta">Alta</option>
+                                        <option value="critica">Crítica</option>
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroGravidadeNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="statusNaoConformidade">
+                                        Status
+                                    </label>
+
+                                    <select
+                                        id="statusNaoConformidade"
+                                        required
+                                    >
+                                        <option value="">
+                                            Selecione
+                                        </option>
+                                        <option value="aberta">Aberta</option>
+                                        <option value="analise">Em análise</option>
+                                        <option value="correcao">Em correção</option>
+                                        <option value="resolvida">Resolvida</option>
+                                        <option value="cancelada">Cancelada</option>
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroStatusNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="responsavelNaoConformidade">
+                                        Responsável
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="responsavelNaoConformidade"
+                                        maxlength="150"
+                                        placeholder="Digite o responsável"
+                                        required
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroResponsavelNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="dataIdentificacaoNaoConformidade">
+                                        Data de identificação
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="dataIdentificacaoNaoConformidade"
+                                    >
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="prazoCorrecaoNaoConformidade">
+                                        Prazo de correção
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="prazoCorrecaoNaoConformidade"
+                                    >
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="descricaoNaoConformidade">
+                                        Descrição
+                                    </label>
+
+                                    <textarea
+                                        id="descricaoNaoConformidade"
+                                        rows="4"
+                                        maxlength="2000"
+                                        placeholder="Descreva a não conformidade"
+                                        required
+                                    ></textarea>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroDescricaoNaoConformidade"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="acaoCorretivaNaoConformidade">
+                                        Ação corretiva
+                                    </label>
+
+                                    <textarea
+                                        id="acaoCorretivaNaoConformidade"
+                                        rows="4"
+                                        maxlength="2000"
+                                        placeholder="Descreva a ação corretiva prevista"
+                                    ></textarea>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-acoes">
+
+                                <button
+                                    type="button"
+                                    id="botaoCancelarNaoConformidade"
+                                    class="botao-secundario"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Salvar não conformidade
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
                 <div
                     id="mensagemNotificacao"
                     class="aviso-flutuante"
@@ -1022,10 +1041,8 @@
         </div>
 
     </div>
-
-    <script src="js/auditorias.js"></script>
     <script src="/js/sessao.js"></script>
-    <script src="/js/dashboard.js"></script>
+    <script src="/js/auditorias.js"></script>
 
 </body>
 </html>
