@@ -21,13 +21,13 @@ function obterElemento() {
     return null;
 }
 
-let documentosCarregados = [];
 let projetosCarregados = [];
-let documentoEmEdicaoId = null;
+let auditoriasCarregadas = [];
+let naoConformidadesCarregadas = [];
+let checklistsCarregados = [];
+let documentosCarregados = [];
+let atividadesCarregadas = [];
 let temporizadorAviso = null;
-
-const TAMANHO_MAXIMO_ARQUIVO =
-    10 * 1024 * 1024;
 
 const botaoMenu =
     obterElemento("botaoMenu");
@@ -38,46 +38,67 @@ const menuLateral =
 const botaoNotificacao =
     obterElemento("botaoNotificacao");
 
+const quantidadeNotificacoes =
+    obterElemento("quantidadeNotificacoes");
+
 const mensagemNotificacao =
     obterElemento("mensagemNotificacao");
 
 const dataAtual =
     obterElemento("dataAtual");
 
-const pesquisaDocumento =
-    obterElemento("pesquisaDocumento");
+const pesquisaGeral =
+    obterElemento("pesquisaGeral");
 
-const filtroTipoDocumento =
-    obterElemento("filtroTipoDocumento");
+const indicadorProjetosAtivos =
+    obterElemento("indicadorProjetosAtivos");
 
-const filtroProjetoDocumento =
-    obterElemento("filtroProjetoDocumento");
-
-const botaoLimparFiltrosDocumento =
+const indicadorAuditoriasPrevistas =
     obterElemento(
-        "botaoLimparFiltrosDocumento"
+        "indicadorAuditoriasPrevistas"
     );
 
-const corpoTabelaDocumentos =
-    obterElemento("corpoTabelaDocumentos");
+const indicadorNaoConformidadesPendentes =
+    obterElemento(
+        "indicadorNaoConformidadesPendentes"
+    );
 
-const quantidadeDocumentos =
-    obterElemento("quantidadeDocumentos");
+const indicadorTaxaConclusao =
+    obterElemento("indicadorTaxaConclusao");
 
-const mensagemSemDocumentos =
-    obterElemento("mensagemSemDocumentos");
+const textoProjetosAtivos =
+    obterElemento("textoProjetosAtivos");
 
-const totalDocumentos =
-    obterElemento("totalDocumentos");
+const textoAuditoriasPrevistas =
+    obterElemento("textoAuditoriasPrevistas");
 
-const totalPdf =
-    obterElemento("totalPdf");
+const textoNaoConformidadesPendentes =
+    obterElemento(
+        "textoNaoConformidadesPendentes"
+    );
 
-const totalPlanilhas =
-    obterElemento("totalPlanilhas");
+const textoTaxaConclusao =
+    obterElemento("textoTaxaConclusao");
 
-const totalOutros =
-    obterElemento("totalOutros");
+const corpoTabelaProjetosRecentes =
+    obterElemento(
+        "corpoTabelaProjetosRecentes"
+    );
+
+const mensagemSemProjetosRecentes =
+    obterElemento(
+        "mensagemSemProjetosRecentes"
+    );
+
+const listaAtividadesDashboard =
+    obterElemento(
+        "listaAtividadesDashboard"
+    );
+
+const mensagemSemAtividadesDashboard =
+    obterElemento(
+        "mensagemSemAtividadesDashboard"
+    );
 
 /* =====================================================
    DATA, MENU E AVISOS
@@ -119,6 +140,40 @@ if (botaoMenu && menuLateral) {
     );
 }
 
+const linksMenu =
+    document.querySelectorAll(
+        ".menu-item"
+    );
+
+linksMenu.forEach(
+    function (link) {
+        link.addEventListener(
+            "click",
+            function () {
+                if (menuLateral) {
+                    menuLateral.classList.remove(
+                        "aberto"
+                    );
+                }
+            }
+        );
+    }
+);
+
+document.addEventListener(
+    "keydown",
+    function (evento) {
+        if (
+            evento.key === "Escape"
+            && menuLateral
+        ) {
+            menuLateral.classList.remove(
+                "aberto"
+            );
+        }
+    }
+);
+
 function mostrarAviso(mensagem) {
     if (!mensagemNotificacao) {
         window.alert(mensagem);
@@ -150,8 +205,23 @@ if (botaoNotificacao) {
     botaoNotificacao.addEventListener(
         "click",
         function () {
+            const quantidade =
+                atividadesCarregadas.length;
+
+            if (quantidade === 0) {
+                mostrarAviso(
+                    "Não existem atividades futuras registradas."
+                );
+
+                return;
+            }
+
             mostrarAviso(
-                "Não existem novas notificações."
+                quantidade === 1
+                    ? "Existe 1 atividade futura registrada."
+                    : "Existem "
+                        + quantidade
+                        + " atividades futuras registradas."
             );
         }
     );
@@ -180,78 +250,76 @@ function normalizarTexto(texto) {
         .toLowerCase();
 }
 
-function obterExtensaoArquivo(
-    nomeArquivo
-) {
+function converterDataLocal(valor) {
+    if (!valor) {
+        return null;
+    }
+
+    const texto =
+        String(valor);
+
+    const dataSimples =
+        texto.substring(0, 10);
+
     const partes =
-        String(nomeArquivo || "")
-            .split(".");
+        dataSimples.split("-");
 
-    if (partes.length < 2) {
-        return "";
-    }
+    if (partes.length !== 3) {
+        const data =
+            new Date(valor);
 
-    return partes.pop().toLowerCase();
-}
-
-function tipoCompativelComArquivo(
-    tipo,
-    extensao
-) {
-    const extensoesPorTipo = {
-        pdf: ["pdf"],
-        planilha: ["xls", "xlsx"],
-        documento: ["doc", "docx"]
-    };
-
-    const extensoes =
-        extensoesPorTipo[tipo];
-
-    return Array.isArray(extensoes)
-        && extensoes.includes(extensao);
-}
-
-function obterInformacoesTipo(tipo) {
-    const tipos = {
-        pdf: {
-            nome: "PDF",
-            sigla: "PDF",
-            classe: "pdf"
-        },
-
-        planilha: {
-            nome: "Planilha",
-            sigla: "XLS",
-            classe: "planilha"
-        },
-
-        documento: {
-            nome: "Documento",
-            sigla: "DOC",
-            classe: "texto"
-        }
-    };
-
-    return tipos[tipo] || {
-        nome: tipo,
-        sigla: "ARQ",
-        classe: "texto"
-    };
-}
-
-function formatarDataHora(dataHora) {
-    if (!dataHora) {
-        return "-";
-    }
-
-    const data = new Date(dataHora);
-
-    if (
-        Number.isNaN(
+        return Number.isNaN(
             data.getTime()
         )
-    ) {
-        return dataHora;
+            ? null
+            : data;
+    }
+
+    return new Date(
+        Number(partes[0]),
+        Number(partes[1]) - 1,
+        Number(partes[2])
+    );
+}
+
+function inicioDoDia(data) {
+    return new Date(
+        data.getFullYear(),
+        data.getMonth(),
+        data.getDate()
+    );
+}
+
+function adicionarDias(
+    data,
+    quantidade
+) {
+    const resultado =
+        new Date(data);
+
+    resultado.setDate(
+        resultado.getDate()
+        + quantidade
+    );
+
+    return resultado;
+}
+
+function nomeMesCurto(data) {
+    return data
+        .toLocaleDateString(
+            "pt-BR",
+            {
+                month: "short"
+            }
+        )
+        .replace(".", "")
+        .toUpperCase();
+}
+
+function formatarDataCurta(data) {
+    if (!data) {
+        return "-";
     }
 
     return data.toLocaleDateString(
@@ -259,362 +327,344 @@ function formatarDataHora(dataHora) {
     );
 }
 
-function formatarTamanho(bytes) {
-    const tamanho =
-        Number(bytes) || 0;
+function nomeStatusProjeto(status) {
+    const nomes = {
+        planejamento: "Planejamento",
+        planejado: "Planejado",
+        andamento: "Em andamento",
+        concluido: "Concluído",
+        pausado: "Pausado",
+        cancelado: "Cancelado"
+    };
 
-    if (tamanho < 1024) {
-        return tamanho + " B";
-    }
-
-    if (tamanho < 1024 * 1024) {
-        return (
-            tamanho / 1024
-        ).toFixed(1) + " KB";
-    }
-
-    return (
-        tamanho / 1024 / 1024
-    ).toFixed(1) + " MB";
+    return nomes[status] || status || "-";
 }
 
-function obterDocumentoPorId(id) {
-    return documentosCarregados.find(
-        function (documento) {
-            return Number(documento.id)
-                === Number(id);
-        }
+function classeStatusProjeto(status) {
+    const classes = {
+        planejamento: "planejamento",
+        planejado: "planejamento",
+        andamento: "andamento",
+        concluido: "concluido",
+        pausado: "pendente",
+        cancelado: "pendente"
+    };
+
+    return classes[status]
+        || "planejamento";
+}
+
+function obterProgressoProjeto(projeto) {
+    const valor =
+        Number(projeto.progresso);
+
+    if (Number.isNaN(valor)) {
+        return 0;
+    }
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            Math.round(valor)
+        )
     );
 }
 
-async function obterMensagemErro(
-    resposta,
-    mensagemPadrao
+function obterDataOrdenacaoProjeto(
+    projeto
 ) {
-    try {
-        const dados =
-            await resposta.json();
+    const valor =
+        projeto.atualizadoEm
+        || projeto.criadoEm
+        || projeto.dataInicio;
 
-        return dados.erro
-            || dados.mensagem
-            || mensagemPadrao;
+    const data =
+        converterDataLocal(valor);
 
-    } catch (erro) {
-        return mensagemPadrao;
+    if (data) {
+        return data.getTime();
     }
+
+    return Number(projeto.id) || 0;
 }
 
 /* =====================================================
    CONSULTAR APIS
 ===================================================== */
 
+async function consultarApi(
+    endereco
+) {
+    const resposta =
+        await fetch(
+            endereco,
+            {
+                credentials:
+                    "same-origin"
+            }
+        );
+
+    if (!resposta.ok) {
+        throw new Error(
+            "Falha ao consultar "
+            + endereco
+        );
+    }
+
+    return resposta.json();
+}
+
 async function carregarDados() {
     try {
-        const respostas =
-            await Promise.all([
-                fetch(
-                    "/api/documentos",
-                    {
-                        credentials:
-                            "same-origin"
-                    }
+        const resultados =
+            await Promise.allSettled([
+                consultarApi(
+                    "/api/projetos"
                 ),
-
-                fetch(
-                    "/api/projetos",
-                    {
-                        credentials:
-                            "same-origin"
-                    }
+                consultarApi(
+                    "/api/auditorias"
+                ),
+                consultarApi(
+                    "/api/nao-conformidades"
+                ),
+                consultarApi(
+                    "/api/checklists"
+                ),
+                consultarApi(
+                    "/api/documentos"
                 )
             ]);
 
-        for (
-            let indice = 0;
-            indice < respostas.length;
-            indice++
-        ) {
-            if (!respostas[indice].ok) {
-                throw new Error(
-                    "Não foi possível consultar os dados."
-                );
-            }
-        }
+        projetosCarregados =
+            resultados[0].status
+                === "fulfilled"
+                ? resultados[0].value
+                : [];
+
+        auditoriasCarregadas =
+            resultados[1].status
+                === "fulfilled"
+                ? resultados[1].value
+                : [];
+
+        naoConformidadesCarregadas =
+            resultados[2].status
+                === "fulfilled"
+                ? resultados[2].value
+                : [];
+
+        checklistsCarregados =
+            resultados[3].status
+                === "fulfilled"
+                ? resultados[3].value
+                : [];
 
         documentosCarregados =
-            await respostas[0].json();
+            resultados[4].status
+                === "fulfilled"
+                ? resultados[4].value
+                : [];
 
-        projetosCarregados =
-            await respostas[1].json();
-
-        preencherProjetos();
         atualizarIndicadores();
-        aplicarFiltrosDocumento();
+        renderizarProjetosRecentes();
+        montarAtividades();
+        aplicarPesquisaProjetos();
+
+        const houveFalha =
+            resultados.some(
+                function (resultado) {
+                    return resultado.status
+                        === "rejected";
+                }
+            );
+
+        if (houveFalha) {
+            mostrarAviso(
+                "Alguns indicadores não puderam ser carregados."
+            );
+        }
 
     } catch (erro) {
         console.error(erro);
 
         mostrarAviso(
-            "Erro ao consultar os documentos."
+            "Erro ao carregar o Dashboard."
         );
     }
 }
 
 /* =====================================================
-   SELECTS DINÂMICOS
-===================================================== */
-
-const projetoDocumento =
-    obterElemento("projetoDocumento");
-
-function preencherProjetos() {
-    const valorFormulario =
-        projetoDocumento
-            ? projetoDocumento.value
-            : "";
-
-    const valorFiltro =
-        filtroProjetoDocumento
-            ? filtroProjetoDocumento.value
-            : "todos";
-
-    if (projetoDocumento) {
-        projetoDocumento.innerHTML =
-            '<option value="">'
-            + "Selecione o projeto"
-            + "</option>";
-
-        projetosCarregados.forEach(
-            function (projeto) {
-                const opcao =
-                    document.createElement(
-                        "option"
-                    );
-
-                opcao.value = projeto.id;
-                opcao.textContent =
-                    projeto.nome;
-
-                projetoDocumento.appendChild(
-                    opcao
-                );
-            }
-        );
-
-        projetoDocumento.value =
-            valorFormulario;
-    }
-
-    if (filtroProjetoDocumento) {
-        filtroProjetoDocumento.innerHTML =
-            '<option value="todos">'
-            + "Todos os projetos"
-            + "</option>";
-
-        projetosCarregados.forEach(
-            function (projeto) {
-                const opcao =
-                    document.createElement(
-                        "option"
-                    );
-
-                opcao.value = projeto.id;
-                opcao.textContent =
-                    projeto.nome;
-
-                filtroProjetoDocumento
-                    .appendChild(opcao);
-            }
-        );
-
-        filtroProjetoDocumento.value =
-            valorFiltro;
-    }
-}
-
-/* =====================================================
-   INDICADORES E FILTROS
+   INDICADORES
 ===================================================== */
 
 function atualizarIndicadores() {
-    const quantidadePdf =
-        documentosCarregados.filter(
-            function (documento) {
-                return documento.tipo
-                    === "pdf";
+    const projetosAtivos =
+        projetosCarregados.filter(
+            function (projeto) {
+                return projeto.status
+                    !== "concluido"
+                    && projeto.status
+                        !== "cancelado";
             }
         ).length;
 
-    const quantidadePlanilhas =
-        documentosCarregados.filter(
-            function (documento) {
-                return documento.tipo
-                    === "planilha";
-            }
-        ).length;
+    const hoje =
+        inicioDoDia(new Date());
 
-    const quantidadeOutros =
-        documentosCarregados.filter(
-            function (documento) {
-                return documento.tipo
-                    !== "pdf"
-                    && documento.tipo
-                        !== "planilha";
-            }
-        ).length;
+    const limiteAuditorias =
+        adicionarDias(hoje, 30);
 
-    if (totalDocumentos) {
-        totalDocumentos.textContent =
-            documentosCarregados.length;
-    }
+    const auditoriasPrevistas =
+        auditoriasCarregadas.filter(
+            function (auditoria) {
+                if (
+                    auditoria.status
+                        !== "planejada"
+                ) {
+                    return false;
+                }
 
-    if (totalPdf) {
-        totalPdf.textContent =
-            quantidadePdf;
-    }
-
-    if (totalPlanilhas) {
-        totalPlanilhas.textContent =
-            quantidadePlanilhas;
-    }
-
-    if (totalOutros) {
-        totalOutros.textContent =
-            quantidadeOutros;
-    }
-}
-
-function aplicarFiltrosDocumento() {
-    const termo =
-        pesquisaDocumento
-            ? normalizarTexto(
-                pesquisaDocumento.value
-            )
-            : "";
-
-    const tipoSelecionado =
-        filtroTipoDocumento
-            ? filtroTipoDocumento.value
-            : "todos";
-
-    const projetoSelecionado =
-        filtroProjetoDocumento
-            ? filtroProjetoDocumento.value
-            : "todos";
-
-    const filtrados =
-        documentosCarregados.filter(
-            function (documento) {
-                const texto =
-                    normalizarTexto(
-                        documento.titulo
-                        + " "
-                        + documento.nomeProjeto
-                        + " "
-                        + documento.nomeArquivo
-                        + " "
-                        + documento.enviadoPor
+                const data =
+                    converterDataLocal(
+                        auditoria.dataAuditoria
                     );
 
-                const correspondePesquisa =
-                    texto.includes(termo);
+                if (!data) {
+                    return false;
+                }
 
-                const correspondeTipo =
-                    tipoSelecionado
-                        === "todos"
-                    || tipoSelecionado
-                        === ""
-                    || documento.tipo
-                        === tipoSelecionado;
+                const dataAuditoria =
+                    inicioDoDia(data);
 
-                const correspondeProjeto =
-                    projetoSelecionado
-                        === "todos"
-                    || projetoSelecionado
-                        === ""
-                    || String(
-                        documento.idProjeto
-                    ) === String(
-                        projetoSelecionado
-                    );
-
-                return correspondePesquisa
-                    && correspondeTipo
-                    && correspondeProjeto;
+                return dataAuditoria >= hoje
+                    && dataAuditoria
+                        <= limiteAuditorias;
             }
-        );
+        ).length;
 
-    renderizarDocumentos(filtrados);
-}
-
-if (pesquisaDocumento) {
-    pesquisaDocumento.addEventListener(
-        "input",
-        aplicarFiltrosDocumento
-    );
-}
-
-if (filtroTipoDocumento) {
-    filtroTipoDocumento.addEventListener(
-        "change",
-        aplicarFiltrosDocumento
-    );
-}
-
-if (filtroProjetoDocumento) {
-    filtroProjetoDocumento.addEventListener(
-        "change",
-        aplicarFiltrosDocumento
-    );
-}
-
-if (botaoLimparFiltrosDocumento) {
-    botaoLimparFiltrosDocumento
-        .addEventListener(
-            "click",
-            function () {
-                if (pesquisaDocumento) {
-                    pesquisaDocumento.value =
-                        "";
-                }
-
-                if (filtroTipoDocumento) {
-                    filtroTipoDocumento.value =
-                        "todos";
-                }
-
-                if (filtroProjetoDocumento) {
-                    filtroProjetoDocumento.value =
-                        "todos";
-                }
-
-                aplicarFiltrosDocumento();
-
-                mostrarAviso(
-                    "Os filtros foram removidos."
-                );
+    const naoConformidadesPendentes =
+        naoConformidadesCarregadas.filter(
+            function (registro) {
+                return registro.status
+                    !== "resolvida"
+                    && registro.status
+                        !== "cancelada";
             }
-        );
+        ).length;
+
+    const checklistsConcluidos =
+        checklistsCarregados.filter(
+            function (checklist) {
+                return checklist.status
+                    === "concluido";
+            }
+        ).length;
+
+    const taxaConclusao =
+        checklistsCarregados.length === 0
+            ? 0
+            : Math.round(
+                checklistsConcluidos
+                / checklistsCarregados.length
+                * 100
+            );
+
+    if (indicadorProjetosAtivos) {
+        indicadorProjetosAtivos.textContent =
+            projetosAtivos;
+    }
+
+    if (indicadorAuditoriasPrevistas) {
+        indicadorAuditoriasPrevistas
+            .textContent =
+                auditoriasPrevistas;
+    }
+
+    if (
+        indicadorNaoConformidadesPendentes
+    ) {
+        indicadorNaoConformidadesPendentes
+            .textContent =
+                naoConformidadesPendentes;
+    }
+
+    if (indicadorTaxaConclusao) {
+        indicadorTaxaConclusao.textContent =
+            taxaConclusao + "%";
+    }
+
+    if (textoProjetosAtivos) {
+        textoProjetosAtivos.textContent =
+            projetosCarregados.length
+            + (
+                projetosCarregados.length
+                    === 1
+                    ? " projeto cadastrado"
+                    : " projetos cadastrados"
+            );
+    }
+
+    if (textoAuditoriasPrevistas) {
+        textoAuditoriasPrevistas.textContent =
+            "Planejadas para os próximos 30 dias";
+    }
+
+    if (
+        textoNaoConformidadesPendentes
+    ) {
+        textoNaoConformidadesPendentes
+            .textContent =
+                naoConformidadesCarregadas
+                    .length
+                + " ocorrências cadastradas";
+    }
+
+    if (textoTaxaConclusao) {
+        textoTaxaConclusao.textContent =
+            checklistsConcluidos
+            + " de "
+            + checklistsCarregados.length
+            + " checklists concluídos";
+    }
 }
 
 /* =====================================================
-   TABELA DE DOCUMENTOS
+   PROJETOS RECENTES
 ===================================================== */
 
-function renderizarDocumentos(
-    documentos
+function obterProjetosRecentes() {
+    return projetosCarregados
+        .slice()
+        .sort(
+            function (a, b) {
+                return obterDataOrdenacaoProjeto(b)
+                    - obterDataOrdenacaoProjeto(a);
+            }
+        )
+        .slice(0, 5);
+}
+
+function renderizarProjetosRecentes(
+    projetos
 ) {
-    if (!corpoTabelaDocumentos) {
+    if (!corpoTabelaProjetosRecentes) {
         return;
     }
 
-    corpoTabelaDocumentos.innerHTML = "";
+    const lista =
+        Array.isArray(projetos)
+            ? projetos
+            : obterProjetosRecentes();
 
-    documentos.forEach(
-        function (documento) {
-            const informacoesTipo =
-                obterInformacoesTipo(
-                    documento.tipo
+    corpoTabelaProjetosRecentes.innerHTML =
+        "";
+
+    lista.forEach(
+        function (projeto) {
+            const progresso =
+                obterProgressoProjeto(
+                    projeto
                 );
 
             const linha =
@@ -622,584 +672,311 @@ function renderizarDocumentos(
 
             linha.innerHTML = `
                 <td>
-                    <div
-                        class="documento-identificacao"
+                    <strong>
+                        ${escaparHtml(
+                            projeto.nome
+                        )}
+                    </strong>
+
+                    <span>
+                        ${escaparHtml(
+                            projeto.descricao
+                            || "Projeto cadastrado no sistema"
+                        )}
+                    </span>
+                </td>
+
+                <td>
+                    ${escaparHtml(
+                        projeto.responsavel
+                        || "Não informado"
+                    )}
+                </td>
+
+                <td>
+                    <span
+                        class="status ${classeStatusProjeto(
+                            projeto.status
+                        )}"
                     >
-                        <span
-                            class="documento-icone ${informacoesTipo.classe}"
-                        >
-                            ${informacoesTipo.sigla}
-                        </span>
+                        ${escaparHtml(
+                            nomeStatusProjeto(
+                                projeto.status
+                            )
+                        )}
+                    </span>
+                </td>
 
-                        <div>
-                            <strong>
-                                ${escaparHtml(
-                                    documento.titulo
-                                )}
-                            </strong>
-
-                            <span>
-                                ${escaparHtml(
-                                    documento.nomeArquivo
-                                )}
-                                ·
-                                ${formatarTamanho(
-                                    documento.tamanhoArquivo
-                                )}
-                            </span>
-                        </div>
+                <td>
+                    <div class="progresso-linha">
+                        <div
+                            class="progresso-barra"
+                            style="width: ${progresso}%;"
+                        ></div>
                     </div>
-                </td>
 
-                <td>
-                    ${escaparHtml(
-                        documento.nomeProjeto
-                    )}
-                </td>
-
-                <td>
-                    ${escaparHtml(
-                        informacoesTipo.nome
-                    )}
-                </td>
-
-                <td>
-                    ${escaparHtml(
-                        documento.enviadoPor
-                    )}
-                </td>
-
-                <td>
-                    ${formatarDataHora(
-                        documento.enviadoEm
-                    )}
-                </td>
-
-                <td>
-                    <div class="acoes-tabela">
-
-                        <button
-                            type="button"
-                            class="botao-tabela visualizar-documento"
-                            data-id="${documento.id}"
-                        >
-                            Visualizar
-                        </button>
-
-                        <button
-                            type="button"
-                            class="botao-tabela editar-documento"
-                            data-id="${documento.id}"
-                        >
-                            Editar
-                        </button>
-
-                        <button
-                            type="button"
-                            class="botao-tabela excluir-documento"
-                            data-id="${documento.id}"
-                        >
-                            Excluir
-                        </button>
-
-                    </div>
+                    <small>
+                        ${progresso}%
+                    </small>
                 </td>
             `;
 
-            corpoTabelaDocumentos
+            corpoTabelaProjetosRecentes
                 .appendChild(linha);
         }
     );
 
-    if (quantidadeDocumentos) {
-        quantidadeDocumentos.textContent =
-            documentos.length === 1
-                ? "1 documento encontrado"
-                : documentos.length
-                    + " documentos encontrados";
-    }
-
-    if (mensagemSemDocumentos) {
-        mensagemSemDocumentos
+    if (mensagemSemProjetosRecentes) {
+        mensagemSemProjetosRecentes
             .classList.toggle(
                 "visivel",
-                documentos.length === 0
+                lista.length === 0
             );
     }
 }
 
+function aplicarPesquisaProjetos() {
+    const termo =
+        pesquisaGeral
+            ? normalizarTexto(
+                pesquisaGeral.value
+            )
+            : "";
+
+    const filtrados =
+        obterProjetosRecentes().filter(
+            function (projeto) {
+                const texto =
+                    normalizarTexto(
+                        projeto.nome
+                        + " "
+                        + projeto.descricao
+                        + " "
+                        + projeto.responsavel
+                        + " "
+                        + nomeStatusProjeto(
+                            projeto.status
+                        )
+                    );
+
+                return texto.includes(termo);
+            }
+        );
+
+    renderizarProjetosRecentes(
+        filtrados
+    );
+}
+
+if (pesquisaGeral) {
+    pesquisaGeral.addEventListener(
+        "input",
+        aplicarPesquisaProjetos
+    );
+}
+
 /* =====================================================
-   MODAL E FORMULÁRIO
+   PRÓXIMAS ATIVIDADES
 ===================================================== */
 
-const modalDocumento =
-    obterElemento("modalDocumento");
+function montarAtividades() {
+    const hoje =
+        inicioDoDia(new Date());
 
-const formDocumento =
-    obterElemento("formDocumento");
+    const atividades = [];
 
-const botaoNovoDocumento =
-    obterElemento("botaoNovoDocumento");
+    auditoriasCarregadas.forEach(
+        function (auditoria) {
+            const data =
+                converterDataLocal(
+                    auditoria.dataAuditoria
+                );
 
-const botaoFecharDocumento =
-    obterElemento("botaoFecharDocumento");
+            if (
+                !data
+                || inicioDoDia(data) < hoje
+                || auditoria.status
+                    === "concluida"
+                || auditoria.status
+                    === "cancelada"
+            ) {
+                return;
+            }
 
-const botaoCancelarDocumento =
-    obterElemento("botaoCancelarDocumento");
+            atividades.push({
+                data: inicioDoDia(data),
+                titulo:
+                    auditoria.titulo
+                    || "Auditoria",
+                descricao:
+                    auditoria.nomeProjeto
+                    || "Projeto não informado",
+                detalhe:
+                    "Auditoria "
+                    + (
+                        auditoria.status
+                        === "andamento"
+                            ? "em andamento"
+                            : "planejada"
+                    )
+            });
+        }
+    );
 
-const tituloModalDocumento =
-    obterElemento("tituloModalDocumento");
+    naoConformidadesCarregadas.forEach(
+        function (registro) {
+            const data =
+                converterDataLocal(
+                    registro.prazoCorrecao
+                );
 
-const tituloDocumento =
-    obterElemento("tituloDocumento");
+            if (
+                !data
+                || inicioDoDia(data) < hoje
+                || registro.status
+                    === "resolvida"
+                || registro.status
+                    === "cancelada"
+            ) {
+                return;
+            }
 
-const tipoDocumento =
-    obterElemento("tipoDocumento");
+            atividades.push({
+                data: inicioDoDia(data),
+                titulo:
+                    "Prazo de correção",
+                descricao:
+                    registro.titulo
+                    || "Não conformidade",
+                detalhe:
+                    registro.responsavel
+                    || "Responsável não informado"
+            });
+        }
+    );
 
-const arquivoDocumento =
-    obterElemento("arquivoDocumento");
+    checklistsCarregados.forEach(
+        function (checklist) {
+            const data =
+                converterDataLocal(
+                    checklist.prazo
+                );
 
-const arquivoAtualDocumento =
-    obterElemento("arquivoAtualDocumento");
+            if (
+                !data
+                || inicioDoDia(data) < hoje
+                || checklist.status
+                    === "concluido"
+            ) {
+                return;
+            }
 
-function abrirModalDocumento(
-    documento
-) {
+            atividades.push({
+                data: inicioDoDia(data),
+                titulo:
+                    checklist.titulo
+                    || "Checklist",
+                descricao:
+                    checklist.nomeProjeto
+                    || "Projeto não informado",
+                detalhe:
+                    "Prazo do checklist"
+            });
+        }
+    );
+
+    atividadesCarregadas =
+        atividades
+            .sort(
+                function (a, b) {
+                    return a.data
+                        - b.data;
+                }
+            )
+            .slice(0, 5);
+
+    renderizarAtividades();
+
+    if (quantidadeNotificacoes) {
+        quantidadeNotificacoes.textContent =
+            atividadesCarregadas.length;
+    }
+}
+
+function renderizarAtividades() {
+    if (!listaAtividadesDashboard) {
+        return;
+    }
+
+    listaAtividadesDashboard.innerHTML =
+        "";
+
+    atividadesCarregadas.forEach(
+        function (atividade) {
+            const item =
+                document.createElement(
+                    "article"
+                );
+
+            item.className =
+                "atividade";
+
+            item.innerHTML = `
+                <div class="atividade-data">
+                    <strong>
+                        ${String(
+                            atividade.data.getDate()
+                        ).padStart(2, "0")}
+                    </strong>
+
+                    <span>
+                        ${nomeMesCurto(
+                            atividade.data
+                        )}
+                    </span>
+                </div>
+
+                <div>
+                    <h3>
+                        ${escaparHtml(
+                            atividade.titulo
+                        )}
+                    </h3>
+
+                    <p>
+                        ${escaparHtml(
+                            atividade.descricao
+                        )}
+                    </p>
+
+                    <small>
+                        ${escaparHtml(
+                            atividade.detalhe
+                        )}
+                        ·
+                        ${formatarDataCurta(
+                            atividade.data
+                        )}
+                    </small>
+                </div>
+            `;
+
+            listaAtividadesDashboard
+                .appendChild(item);
+        }
+    );
+
     if (
-        !modalDocumento
-        || !formDocumento
-        || !tituloDocumento
-        || !projetoDocumento
-        || !tipoDocumento
-        || !arquivoDocumento
+        mensagemSemAtividadesDashboard
     ) {
-        mostrarAviso(
-            "O formulário de documento está incompleto."
-        );
-
-        return;
-    }
-
-    formDocumento.reset();
-
-    if (documento) {
-        documentoEmEdicaoId =
-            documento.id;
-
-        if (tituloModalDocumento) {
-            tituloModalDocumento.textContent =
-                "Editar documento";
-        }
-
-        tituloDocumento.value =
-            documento.titulo || "";
-
-        projetoDocumento.value =
-            documento.idProjeto || "";
-
-        tipoDocumento.value =
-            documento.tipo || "";
-
-        if (arquivoAtualDocumento) {
-            arquivoAtualDocumento.textContent =
-                "Arquivo atual: "
-                + documento.nomeArquivo
-                + ". Selecione outro somente para substituí-lo.";
-        }
-
-    } else {
-        documentoEmEdicaoId = null;
-
-        if (tituloModalDocumento) {
-            tituloModalDocumento.textContent =
-                "Enviar documento";
-        }
-
-        if (arquivoAtualDocumento) {
-            arquivoAtualDocumento.textContent =
-                "O arquivo é obrigatório para um novo documento.";
-        }
-    }
-
-    modalDocumento.classList.add(
-        "aberto"
-    );
-
-    modalDocumento.setAttribute(
-        "aria-hidden",
-        "false"
-    );
-
-    document.body.classList.add(
-        "modal-aberto"
-    );
-
-    tituloDocumento.focus();
-}
-
-function fecharModalDocumento() {
-    if (!modalDocumento) {
-        return;
-    }
-
-    modalDocumento.classList.remove(
-        "aberto"
-    );
-
-    modalDocumento.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    document.body.classList.remove(
-        "modal-aberto"
-    );
-
-    documentoEmEdicaoId = null;
-
-    if (arquivoAtualDocumento) {
-        arquivoAtualDocumento.textContent =
-            "";
-    }
-}
-
-if (botaoNovoDocumento) {
-    botaoNovoDocumento.addEventListener(
-        "click",
-        function () {
-            abrirModalDocumento(null);
-        }
-    );
-}
-
-if (botaoFecharDocumento) {
-    botaoFecharDocumento.addEventListener(
-        "click",
-        fecharModalDocumento
-    );
-}
-
-if (botaoCancelarDocumento) {
-    botaoCancelarDocumento
-        .addEventListener(
-            "click",
-            fecharModalDocumento
-        );
-}
-
-if (modalDocumento) {
-    const fundo =
-        modalDocumento.querySelector(
-            ".modal-fundo"
-        );
-
-    if (fundo) {
-        fundo.addEventListener(
-            "click",
-            fecharModalDocumento
-        );
-    }
-}
-
-/* =====================================================
-   SALVAR DOCUMENTO
-===================================================== */
-
-if (formDocumento) {
-    formDocumento.addEventListener(
-        "submit",
-        async function (evento) {
-            evento.preventDefault();
-
-            const arquivo =
-                arquivoDocumento
-                    .files[0];
-
-            const editando =
-                documentoEmEdicaoId !== null;
-
-            if (
-                tituloDocumento.value
-                    .trim().length < 3
-                || projetoDocumento.value
-                    === ""
-                || tipoDocumento.value === ""
-            ) {
-                mostrarAviso(
-                    "Preencha corretamente os campos obrigatórios."
-                );
-
-                return;
-            }
-
-            if (
-                !editando
-                && !arquivo
-            ) {
-                mostrarAviso(
-                    "Selecione um arquivo."
-                );
-
-                return;
-            }
-
-            if (arquivo) {
-                const extensao =
-                    obterExtensaoArquivo(
-                        arquivo.name
-                    );
-
-                if (
-                    !tipoCompativelComArquivo(
-                        tipoDocumento.value,
-                        extensao
-                    )
-                ) {
-                    mostrarAviso(
-                        "O arquivo não corresponde ao tipo selecionado."
-                    );
-
-                    return;
-                }
-
-                if (
-                    arquivo.size
-                        > TAMANHO_MAXIMO_ARQUIVO
-                ) {
-                    mostrarAviso(
-                        "O arquivo deve possuir no máximo 10 MB."
-                    );
-
-                    return;
-                }
-            }
-
-            const dados =
-                new FormData();
-
-            dados.append(
-                "titulo",
-                tituloDocumento.value.trim()
+        mensagemSemAtividadesDashboard
+            .classList.toggle(
+                "visivel",
+                atividadesCarregadas.length
+                    === 0
             );
-
-            dados.append(
-                "idProjeto",
-                projetoDocumento.value
-            );
-
-            dados.append(
-                "tipo",
-                tipoDocumento.value
-            );
-
-            if (arquivo) {
-                dados.append(
-                    "arquivo",
-                    arquivo
-                );
-            }
-
-            const endereco =
-                editando
-                    ? "/api/documentos/"
-                        + documentoEmEdicaoId
-                    : "/api/documentos";
-
-            try {
-                const resposta =
-                    await fetch(
-                        endereco,
-                        {
-                            method:
-                                editando
-                                    ? "PUT"
-                                    : "POST",
-
-                            credentials:
-                                "same-origin",
-
-                            body: dados
-                        }
-                    );
-
-                if (!resposta.ok) {
-                    const mensagem =
-                        await obterMensagemErro(
-                            resposta,
-                            "Não foi possível salvar o documento."
-                        );
-
-                    throw new Error(
-                        mensagem
-                    );
-                }
-
-                fecharModalDocumento();
-                await carregarDados();
-
-                mostrarAviso(
-                    editando
-                        ? "Documento atualizado com sucesso."
-                        : "Documento enviado com sucesso."
-                );
-
-            } catch (erro) {
-                console.error(erro);
-                mostrarAviso(erro.message);
-            }
-        }
-    );
-}
-
-/* =====================================================
-   AÇÕES DA TABELA
-===================================================== */
-
-if (corpoTabelaDocumentos) {
-    corpoTabelaDocumentos
-        .addEventListener(
-            "click",
-            async function (evento) {
-                const botao =
-                    evento.target.closest(
-                        "button"
-                    );
-
-                if (!botao) {
-                    return;
-                }
-
-                const id =
-                    Number(
-                        botao.dataset.id
-                    );
-
-                const documento =
-                    obterDocumentoPorId(id);
-
-                if (!documento) {
-                    mostrarAviso(
-                        "Documento não encontrado."
-                    );
-
-                    return;
-                }
-
-                if (
-                    botao.classList.contains(
-                        "visualizar-documento"
-                    )
-                ) {
-                    window.open(
-                        "/api/documentos/"
-                        + documento.id
-                        + "/arquivo",
-                        "_blank",
-                        "noopener"
-                    );
-
-                    return;
-                }
-
-                if (
-                    botao.classList.contains(
-                        "editar-documento"
-                    )
-                ) {
-                    abrirModalDocumento(
-                        documento
-                    );
-
-                    return;
-                }
-
-                if (
-                    botao.classList.contains(
-                        "excluir-documento"
-                    )
-                ) {
-                    await excluirDocumento(
-                        documento
-                    );
-                }
-            }
-        );
-}
-
-async function excluirDocumento(
-    documento
-) {
-    const confirmou =
-        window.confirm(
-            'Deseja excluir o documento "'
-            + documento.titulo
-            + '"?'
-        );
-
-    if (!confirmou) {
-        return;
-    }
-
-    try {
-        const resposta =
-            await fetch(
-                "/api/documentos/"
-                + documento.id,
-                {
-                    method: "DELETE",
-                    credentials:
-                        "same-origin"
-                }
-            );
-
-        if (!resposta.ok) {
-            const mensagem =
-                await obterMensagemErro(
-                    resposta,
-                    "Não foi possível excluir o documento."
-                );
-
-            throw new Error(mensagem);
-        }
-
-        await carregarDados();
-
-        mostrarAviso(
-            "Documento excluído com sucesso."
-        );
-
-    } catch (erro) {
-        console.error(erro);
-        mostrarAviso(erro.message);
     }
 }
-
-/* =====================================================
-   TECLA ESCAPE
-===================================================== */
-
-document.addEventListener(
-    "keydown",
-    function (evento) {
-        if (evento.key !== "Escape") {
-            return;
-        }
-
-        if (menuLateral) {
-            menuLateral.classList.remove(
-                "aberto"
-            );
-        }
-
-        if (
-            modalDocumento
-            && modalDocumento.classList
-                .contains("aberto")
-        ) {
-            fecharModalDocumento();
-        }
-    }
-);
 
 /* =====================================================
    INICIALIZAÇÃO

@@ -8,7 +8,7 @@
         content="width=device-width, initial-scale=1.0"
     >
 
-    <title>Documentos | Soluções Engenharia C&amp;F</title>
+    <title>Dashboard | Soluções Engenharia C&amp;F</title>
 
     <link
         rel="stylesheet"
@@ -44,7 +44,7 @@
 
                 <a
                     href="/dashboard.html"
-                    class="menu-item"
+                    class="menu-item ativo"
                 >
                     <span class="menu-icone">
                         ▦
@@ -88,7 +88,7 @@
 
                 <a
                     href="/documentos.html"
-                    class="menu-item ativo"
+                    class="menu-item"
                 >
                     <span class="menu-icone">
                         ▤
@@ -157,14 +157,14 @@
 
                 <div class="barra-pesquisa">
 
-                    <label for="pesquisaDocumento">
-                        Pesquisar documentos
+                    <label for="pesquisaGeral">
+                        Buscar nos projetos recentes
                     </label>
 
                     <input
                         type="search"
-                        id="pesquisaDocumento"
-                        placeholder="Pesquisar por título, projeto, arquivo ou responsável..."
+                        id="pesquisaGeral"
+                        placeholder="Pesquisar projeto, responsável ou status..."
                     >
 
                 </div>
@@ -178,7 +178,10 @@
                         aria-label="Exibir notificações"
                     >
                         🔔
-                        <span>3</span>
+
+                        <span id="quantidadeNotificacoes">
+                            0
+                        </span>
                     </button>
 
                     <div
@@ -196,405 +199,219 @@
 
                     <div>
                         <p class="pagina-etiqueta">
-                            ARQUIVOS
+                            VISÃO GERAL
                         </p>
 
-                        <h1>Documentos</h1>
+                        <h1>Dashboard</h1>
 
                         <p>
-                            Consulte e organize os arquivos
-                            relacionados aos projetos.
+                            Acompanhe os principais indicadores
+                            e atividades do sistema.
                         </p>
                     </div>
 
-                    <button
-                        type="button"
+                    <a
+                        href="/projetos.html"
                         class="botao-primario"
-                        id="botaoNovoDocumento"
                     >
-                        + Enviar documento
-                    </button>
+                        + Novo projeto
+                    </a>
 
                 </section>
 
-                <section
-                    class="grade-indicadores indicadores-documentos"
-                >
+                <section class="grade-indicadores">
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
+
                             <span>
-                                Total de documentos
+                                Projetos ativos
                             </span>
 
                             <span class="indicador-icone azul">
-                                ▤
+                                ▣
                             </span>
+
                         </div>
 
-                        <strong id="totalDocumentos">
+                        <strong id="indicadorProjetosAtivos">
                             0
                         </strong>
 
-                        <p>Arquivos cadastrados</p>
+                        <p id="textoProjetosAtivos">
+                            Carregando projetos...
+                        </p>
 
                     </article>
 
                     <article class="cartao-indicador">
 
                         <div class="indicador-topo">
+
                             <span>
-                                Documentos PDF
-                            </span>
-
-                            <span class="indicador-icone vermelho">
-                                PDF
-                            </span>
-                        </div>
-
-                        <strong id="totalPdf">
-                            0
-                        </strong>
-
-                        <p>Arquivos em formato PDF</p>
-
-                    </article>
-
-                    <article class="cartao-indicador">
-
-                        <div class="indicador-topo">
-                            <span>
-                                Planilhas
-                            </span>
-
-                            <span class="indicador-icone verde">
-                                XLS
-                            </span>
-                        </div>
-
-                        <strong id="totalPlanilhas">
-                            0
-                        </strong>
-
-                        <p>Arquivos de controle</p>
-
-                    </article>
-
-                    <article class="cartao-indicador">
-
-                        <div class="indicador-topo">
-                            <span>
-                                Outros formatos
+                                Auditorias previstas
                             </span>
 
                             <span class="indicador-icone amarelo">
-                                DOC
+                                ✓
                             </span>
+
                         </div>
 
-                        <strong id="totalOutros">
+                        <strong id="indicadorAuditoriasPrevistas">
                             0
                         </strong>
 
-                        <p>Documentos complementares</p>
+                        <p id="textoAuditoriasPrevistas">
+                            Próximos 30 dias
+                        </p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+
+                            <span>
+                                Não conformidades
+                            </span>
+
+                            <span class="indicador-icone vermelho">
+                                !
+                            </span>
+
+                        </div>
+
+                        <strong
+                            id="indicadorNaoConformidadesPendentes"
+                        >
+                            0
+                        </strong>
+
+                        <p
+                            id="textoNaoConformidadesPendentes"
+                        >
+                            Ocorrências pendentes
+                        </p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+
+                            <span>
+                                Taxa de conclusão
+                            </span>
+
+                            <span class="indicador-icone verde">
+                                %
+                            </span>
+
+                        </div>
+
+                        <strong id="indicadorTaxaConclusao">
+                            0%
+                        </strong>
+
+                        <p id="textoTaxaConclusao">
+                            Baseada nos checklists
+                        </p>
 
                     </article>
 
                 </section>
 
-                <section class="painel-filtros">
+                <section class="grade-dashboard">
 
-                    <div class="campo-filtro">
-
-                        <label for="filtroTipoDocumento">
-                            Tipo de arquivo
-                        </label>
-
-                        <select id="filtroTipoDocumento">
-
-                            <option value="todos">
-                                Todos os tipos
-                            </option>
-
-                            <option value="pdf">
-                                PDF
-                            </option>
-
-                            <option value="planilha">
-                                Planilha
-                            </option>
-
-                            <option value="documento">
-                                Documento de texto
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <div class="campo-filtro">
-
-                        <label for="filtroProjetoDocumento">
-                            Projeto
-                        </label>
-
-                        <select id="filtroProjetoDocumento">
-
-                            <option value="todos">
-                                Todos os projetos
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                    <button
-                        type="button"
-                        class="botao-secundario"
-                        id="botaoLimparFiltrosDocumento"
-                    >
-                        Limpar filtros
-                    </button>
-
-                </section>
-
-                <section class="painel-listagem">
-
-                    <div class="painel-cabecalho">
-
-                        <div>
-                            <h2>
-                                Arquivos cadastrados
-                            </h2>
-
-                            <p id="quantidadeDocumentos">
-                                Carregando documentos...
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div class="tabela-responsiva">
-
-                        <table
-                            class="tabela-sistema tabela-documentos"
-                        >
-
-                            <thead>
-                                <tr>
-                                    <th>Documento</th>
-                                    <th>Projeto</th>
-                                    <th>Tipo</th>
-                                    <th>Enviado por</th>
-                                    <th>Data</th>
-                                    <th>Ações</th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="corpoTabelaDocumentos">
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                    <div
-                        id="mensagemSemDocumentos"
-                        class="mensagem-sem-resultados"
-                    >
-                        Nenhum documento foi encontrado.
-                    </div>
-
-                </section>
-
-                <!-- MODAL DE DOCUMENTO -->
-
-                <div
-                    id="modalDocumento"
-                    class="modal"
-                    aria-hidden="true"
-                >
-
-                    <div class="modal-fundo"></div>
-
-                    <section
-                        class="modal-conteudo"
-                        role="dialog"
-                        aria-modal="true"
-                        aria-labelledby="tituloModalDocumento"
+                    <article
+                        class="painel-dashboard painel-projetos"
                     >
 
-                        <div class="modal-cabecalho">
+                        <div class="painel-cabecalho">
 
                             <div>
-                                <p class="pagina-etiqueta">
-                                    ARQUIVO
-                                </p>
-
-                                <h2 id="tituloModalDocumento">
-                                    Enviar documento
+                                <h2>
+                                    Projetos recentes
                                 </h2>
+
+                                <p>
+                                    Últimos projetos atualizados
+                                </p>
                             </div>
 
-                            <button
-                                type="button"
-                                class="botao-fechar-modal"
-                                id="botaoFecharDocumento"
-                                aria-label="Fechar formulário"
-                            >
-                                ×
-                            </button>
+                            <a href="/projetos.html">
+                                Ver todos
+                            </a>
 
                         </div>
 
-                        <form
-                            id="formDocumento"
-                            enctype="multipart/form-data"
-                            novalidate
+                        <div class="tabela-responsiva">
+
+                            <table class="tabela-sistema">
+
+                                <thead>
+                                    <tr>
+                                        <th>Projeto</th>
+                                        <th>Responsável</th>
+                                        <th>Status</th>
+                                        <th>Progresso</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody
+                                    id="corpoTabelaProjetosRecentes"
+                                >
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div
+                            id="mensagemSemProjetosRecentes"
+                            class="mensagem-sem-resultados"
                         >
+                            Nenhum projeto recente foi encontrado.
+                        </div>
 
-                            <div class="grade-formulario">
+                    </article>
 
-                                <div
-                                    class="campo-formulario campo-largo"
-                                >
+                    <aside
+                        class="painel-dashboard painel-atividades"
+                    >
 
-                                    <label for="tituloDocumento">
-                                        Título do documento
-                                    </label>
+                        <div class="painel-cabecalho">
 
-                                    <input
-                                        type="text"
-                                        id="tituloDocumento"
-                                        maxlength="150"
-                                        placeholder="Digite um título"
-                                        required
-                                    >
+                            <div>
+                                <h2>
+                                    Próximas atividades
+                                </h2>
 
-                                    <small
-                                        class="mensagem-erro"
-                                        id="erroTituloDocumento"
-                                    ></small>
-
-                                </div>
-
-                                <div class="campo-formulario">
-
-                                    <label for="projetoDocumento">
-                                        Projeto
-                                    </label>
-
-                                    <select
-                                        id="projetoDocumento"
-                                        required
-                                    >
-                                        <option value="">
-                                            Selecione o projeto
-                                        </option>
-                                    </select>
-
-                                    <small
-                                        class="mensagem-erro"
-                                        id="erroProjetoDocumento"
-                                    ></small>
-
-                                </div>
-
-                                <div class="campo-formulario">
-
-                                    <label for="tipoDocumento">
-                                        Tipo
-                                    </label>
-
-                                    <select
-                                        id="tipoDocumento"
-                                        required
-                                    >
-
-                                        <option value="">
-                                            Selecione
-                                        </option>
-
-                                        <option value="pdf">
-                                            PDF
-                                        </option>
-
-                                        <option value="planilha">
-                                            Planilha
-                                        </option>
-
-                                        <option value="documento">
-                                            Documento de texto
-                                        </option>
-
-                                    </select>
-
-                                    <small
-                                        class="mensagem-erro"
-                                        id="erroTipoDocumento"
-                                    ></small>
-
-                                </div>
-
-                                <div
-                                    class="campo-formulario campo-largo"
-                                >
-
-                                    <label for="arquivoDocumento">
-                                        Selecionar arquivo
-                                    </label>
-
-                                    <input
-                                        type="file"
-                                        id="arquivoDocumento"
-                                        accept=".pdf,.doc,.docx,.xls,.xlsx"
-                                    >
-
-                                    <small class="ajuda-campo">
-                                        Formatos permitidos: PDF, DOC,
-                                        DOCX, XLS e XLSX. Tamanho máximo:
-                                        10 MB.
-                                    </small>
-
-                                    <small
-                                        id="arquivoAtualDocumento"
-                                        class="ajuda-campo"
-                                    ></small>
-
-                                    <small
-                                        class="mensagem-erro"
-                                        id="erroArquivoDocumento"
-                                    ></small>
-
-                                </div>
-
+                                <p>
+                                    Prazos e compromissos
+                                </p>
                             </div>
 
-                            <div class="modal-acoes">
+                        </div>
 
-                                <button
-                                    type="button"
-                                    class="botao-secundario"
-                                    id="botaoCancelarDocumento"
-                                >
-                                    Cancelar
-                                </button>
+                        <div
+                            class="lista-atividades"
+                            id="listaAtividadesDashboard"
+                        >
+                        </div>
 
-                                <button
-                                    type="submit"
-                                    class="botao-acao"
-                                >
-                                    Salvar documento
-                                </button>
+                        <div
+                            id="mensagemSemAtividadesDashboard"
+                            class="mensagem-sem-resultados"
+                        >
+                            Nenhuma atividade futura foi encontrada.
+                        </div>
 
-                            </div>
+                    </aside>
 
-                        </form>
-
-                    </section>
-
-                </div>
+                </section>
 
                 <div
                     id="mensagemNotificacao"
@@ -609,7 +426,7 @@
     </div>
 
     <script src="/js/sessao.js"></script>
-    <script src="/js/documentos.js"></script>
+    <script src="/js/dashboard.js"></script>
 
 </body>
 </html>
