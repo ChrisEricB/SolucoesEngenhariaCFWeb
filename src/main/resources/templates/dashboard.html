@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Dashboard | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-sistema">
+
+    <div class="layout-sistema">
+
+        <aside class="menu-lateral">
+
+            <div class="menu-marca">
+
+                <div class="menu-marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <strong>Soluções Engenharia</strong>
+                    <span>Gestão integrada</span>
+                </div>
+
+            </div>
+
+            <nav class="menu-navegacao">
+
+                <a
+                    href="dashboard.html"
+                    class="menu-item ativo"
+                >
+                    <span class="menu-icone">▦</span>
+                    Dashboard
+                </a>
+
+                <a
+                    href="projetos.html"
+                    class="menu-item"
+                >
+                    <span class="menu-icone">▣</span>
+                    Projetos
+                </a>
+
+                <a
+                    href="auditorias.html"
+                    class="menu-item"
+                >
+                    <span class="menu-icone">✓</span>
+                    Auditorias
+                </a>
+
+                <a
+                    href="checklists.html"
+                    class="menu-item"
+                >
+                    <span class="menu-icone">☷</span>
+                    Checklists
+                </a>
+
+                <a
+                    href="documentos.html"
+                    class="menu-item"
+                >
+                    <span class="menu-icone">▤</span>
+                    Documentos
+                </a>
+
+                <a
+                    href="usuarios.html"
+                    class="menu-item"
+                >
+                    <span class="menu-icone">●</span>
+                    Usuários
+                </a>
+
+            </nav>
+
+            <div class="menu-rodape">
+
+                <div class="usuario-resumo">
+
+                    <div class="usuario-avatar">
+                        CB
+                    </div>
+
+                     <div>
+                        <strong data-usuario-nome>
+                        Usuário
+                        </strong>
+
+                        <span data-usuario-perfil>
+                        Perfil
+                        </span>
+                                                                      
+                    </div>
+
+                </div>
+
+                <a href="#" 
+                   id="botaoSair"
+                   class="botao-sair">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <div class="conteudo-sistema">
+
+            <header class="barra-superior">
+
+                <button
+                    type="button"
+                    id="botaoMenu"
+                    class="botao-menu-mobile"
+                    aria-label="Abrir ou fechar menu"
+                >
+                    ☰
+                </button>
+
+                <div class="barra-pesquisa">
+
+                    <label for="pesquisaGeral">
+                        Buscar no sistema
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaGeral"
+                        placeholder="Pesquisar projetos, auditorias..."
+                    >
+
+                </div>
+
+                <div class="barra-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-notificacao"
+                        id="botaoNotificacao"
+                        aria-label="Exibir notificações"
+                    >
+                        🔔
+                        <span>3</span>
+                    </button>
+
+                    <div class="data-atual" id="dataAtual"></div>
+
+                </div>
+
+            </header>
+
+            <main class="conteudo-principal">
+
+                <section class="cabecalho-pagina">
+
+                    <div>
+                        <p class="pagina-etiqueta">
+                            VISÃO GERAL
+                        </p>
+
+                        <h1>Dashboard</h1>
+
+                        <p>
+                            Acompanhe os principais indicadores
+                            e atividades do sistema.
+                        </p>
+                    </div>
+
+                    <a
+                        href="projetos.html"
+                        class="botao-acao"
+                    >
+                        + Novo projeto
+                    </a>
+
+                </section>
+
+                <section class="grade-indicadores">
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Projetos ativos</span>
+                            <span class="indicador-icone azul">▣</span>
+                        </div>
+
+                        <strong>8</strong>
+
+                        <p>
+                            <span class="texto-sucesso">+2</span>
+                            no último mês
+                        </p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Auditorias previstas</span>
+                            <span class="indicador-icone amarelo">✓</span>
+                        </div>
+
+                        <strong>5</strong>
+
+                        <p>Próximos 30 dias</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Não conformidades</span>
+                            <span class="indicador-icone vermelho">!</span>
+                        </div>
+
+                        <strong>7</strong>
+
+                        <p>
+                            <span class="texto-erro">3</span>
+                            com prazo próximo
+                        </p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Taxa de conclusão</span>
+                            <span class="indicador-icone verde">%</span>
+                        </div>
+
+                        <strong>72%</strong>
+
+                        <p>
+                            <span class="texto-sucesso">+5%</span>
+                            em relação ao período anterior
+                        </p>
+
+                    </article>
+
+                </section>
+
+                <section class="grade-dashboard">
+
+                    <article class="painel-dashboard painel-projetos">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h2>Projetos recentes</h2>
+                                <p>Últimos projetos atualizados</p>
+                            </div>
+
+                            <a href="projetos.html">
+                                Ver todos
+                            </a>
+
+                        </div>
+
+                        <div class="tabela-responsiva">
+
+                            <table class="tabela-sistema">
+
+                                <thead>
+                                    <tr>
+                                        <th>Projeto</th>
+                                        <th>Responsável</th>
+                                        <th>Status</th>
+                                        <th>Progresso</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Projeto Solar</strong>
+                                            <span>Energia renovável</span>
+                                        </td>
+
+                                        <td>Fihama Santos</td>
+
+                                        <td>
+                                            <span class="status andamento">
+                                                Em andamento
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="progresso-linha">
+                                                <div
+                                                    class="progresso-barra"
+                                                    style="width: 75%;"
+                                                ></div>
+                                            </div>
+                                            <small>75%</small>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Auditoria ISO 9001</strong>
+                                            <span>Qualidade</span>
+                                        </td>
+
+                                        <td>Carlos Barrantes</td>
+
+                                        <td>
+                                            <span class="status planejamento">
+                                                Planejamento
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="progresso-linha">
+                                                <div
+                                                    class="progresso-barra"
+                                                    style="width: 30%;"
+                                                ></div>
+                                            </div>
+                                            <small>30%</small>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>Modernização da fábrica</strong>
+                                            <span>Infraestrutura</span>
+                                        </td>
+
+                                        <td>Christian Barrantes</td>
+
+                                        <td>
+                                            <span class="status concluido">
+                                                Concluído
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="progresso-linha">
+                                                <div
+                                                    class="progresso-barra"
+                                                    style="width: 100%;"
+                                                ></div>
+                                            </div>
+                                            <small>100%</small>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </article>
+
+                    <aside class="painel-dashboard painel-atividades">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h2>Próximas atividades</h2>
+                                <p>Prazos e compromissos</p>
+                            </div>
+
+                        </div>
+
+                        <div class="lista-atividades">
+
+                            <article class="atividade">
+
+                                <div class="atividade-data">
+                                    <strong>30</strong>
+                                    <span>JUL</span>
+                                </div>
+
+                                <div>
+                                    <h3>Auditoria interna</h3>
+                                    <p>Projeto Solar</p>
+                                    <small>09:00</small>
+                                </div>
+
+                            </article>
+
+                            <article class="atividade">
+
+                                <div class="atividade-data">
+                                    <strong>05</strong>
+                                    <span>AGO</span>
+                                </div>
+
+                                <div>
+                                    <h3>Prazo de correção</h3>
+                                    <p>Documento vencido</p>
+                                    <small>Até 18:00</small>
+                                </div>
+
+                            </article>
+
+                            <article class="atividade">
+
+                                <div class="atividade-data">
+                                    <strong>12</strong>
+                                    <span>AGO</span>
+                                </div>
+
+                                <div>
+                                    <h3>Reunião de acompanhamento</h3>
+                                    <p>Modernização da fábrica</p>
+                                    <small>14:30</small>
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </aside>
+
+                </section>
+
+                <div
+                    id="mensagemNotificacao"
+                    class="aviso-flutuante"
+                    aria-live="polite"
+                ></div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="/js/sessao.js"></script>
+    <script src="/js/dashboard.js"></script>
+    
+</body>
+</html>

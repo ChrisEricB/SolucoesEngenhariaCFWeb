@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Usuários | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-sistema">
+
+    <div class="layout-sistema">
+
+        <aside class="menu-lateral">
+
+            <div class="menu-marca">
+
+                <div class="menu-marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <strong>Soluções Engenharia</strong>
+                    <span>Gestão integrada</span>
+                </div>
+
+            </div>
+
+            <nav class="menu-navegacao">
+
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icone">▦</span>
+                    Dashboard
+                </a>
+
+                <a href="projetos.html" class="menu-item">
+                    <span class="menu-icone">▣</span>
+                    Projetos
+                </a>
+
+                <a href="auditorias.html" class="menu-item">
+                    <span class="menu-icone">✓</span>
+                    Auditorias
+                </a>
+
+                <a href="checklists.html" class="menu-item">
+                    <span class="menu-icone">☷</span>
+                    Checklists
+                </a>
+
+                <a href="documentos.html" class="menu-item">
+                    <span class="menu-icone">▤</span>
+                    Documentos
+                </a>
+
+                <a href="usuarios.html" class="menu-item ativo">
+                    <span class="menu-icone">●</span>
+                    Usuários
+                </a>
+
+            </nav>
+
+            <div class="menu-rodape">
+
+                <div class="usuario-resumo">
+
+                    <div class="usuario-avatar">
+                        CB
+                    </div>
+
+                    <div>
+                        <strong data-usuario-nome>
+                        Usuário
+                        </strong>
+
+                        <span data-usuario-perfil>
+                        Perfil
+                        </span>
+                                                                      
+                    </div>
+
+                </div>
+
+                <a href="#" 
+                   id="botaoSair"
+                   class="botao-sair">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <div class="conteudo-sistema">
+
+            <header class="barra-superior">
+
+                <button
+                    type="button"
+                    id="botaoMenu"
+                    class="botao-menu-mobile"
+                    aria-label="Abrir ou fechar menu"
+                >
+                    ☰
+                </button>
+
+                <div class="barra-pesquisa">
+
+                    <label for="pesquisaUsuario">
+                        Pesquisar usuários
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaUsuario"
+                        placeholder="Pesquisar por nome ou e-mail..."
+                    >
+
+                </div>
+
+                <div class="barra-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-notificacao"
+                        id="botaoNotificacao"
+                        aria-label="Exibir notificações"
+                    >
+                        🔔
+                        <span>3</span>
+                    </button>
+
+                    <div
+                        class="data-atual"
+                        id="dataAtual"
+                    ></div>
+
+                </div>
+
+            </header>
+
+            <main class="conteudo-principal">
+
+                <section class="cabecalho-pagina">
+
+                    <div>
+                        <p class="pagina-etiqueta">
+                            ADMINISTRAÇÃO
+                        </p>
+
+                        <h1>Usuários</h1>
+
+                        <p>
+                            Gerencie os usuários e os níveis
+                            de acesso ao sistema.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-acao"
+                        id="botaoNovoUsuario"
+                    >
+                        + Novo usuário
+                    </button>
+
+                </section>
+
+                <section class="grade-indicadores indicadores-usuarios">
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Total de usuários</span>
+
+                            <span class="indicador-icone azul">
+                                ●
+                            </span>
+                        </div>
+
+                        <strong id="totalUsuarios">
+                            5
+                        </strong>
+
+                        <p>Usuários cadastrados</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Usuários ativos</span>
+
+                            <span class="indicador-icone verde">
+                                ✓
+                            </span>
+                        </div>
+
+                        <strong id="usuariosAtivos">
+                            4
+                        </strong>
+
+                        <p>Com acesso liberado</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Administradores</span>
+
+                            <span class="indicador-icone amarelo">
+                                A
+                            </span>
+                        </div>
+
+                        <strong id="totalAdministradores">
+                            2
+                        </strong>
+
+                        <p>Acesso administrativo</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Usuários inativos</span>
+
+                            <span class="indicador-icone vermelho">
+                                !
+                            </span>
+                        </div>
+
+                        <strong id="usuariosInativos">
+                            1
+                        </strong>
+
+                        <p>Acesso bloqueado</p>
+
+                    </article>
+
+                </section>
+
+                <section class="painel-filtros">
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroPerfilUsuario">
+                            Perfil
+                        </label>
+
+                        <select id="filtroPerfilUsuario">
+
+                            <option value="todos">
+                                Todos os perfis
+                            </option>
+
+                            <option value="administrador">
+                                Administrador
+                            </option>
+
+                            <option value="gestor">
+                                Gestor
+                            </option>
+
+                            <option value="colaborador">
+                                Colaborador
+                            </option>
+
+                            <option value="auditor">
+                                Auditor
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroSituacaoUsuario">
+                            Situação
+                        </label>
+
+                        <select id="filtroSituacaoUsuario">
+
+                            <option value="todos">
+                                Todas as situações
+                            </option>
+
+                            <option value="ativo">
+                                Ativo
+                            </option>
+
+                            <option value="inativo">
+                                Inativo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-secundario"
+                        id="botaoLimparFiltrosUsuario"
+                    >
+                        Limpar filtros
+                    </button>
+
+                </section>
+
+                <section class="painel-listagem">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h2>Usuários cadastrados</h2>
+
+                            <p id="quantidadeUsuarios">
+                                Carregando usuários...
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="tabela-responsiva">
+
+                        <table class="tabela-sistema tabela-usuarios">
+
+                            <thead>
+                                <tr>
+                                    <th>Usuário</th>
+                                    <th>Perfil</th>
+                                    <th>Departamento</th>
+                                    <th>Situação</th>
+                                    <th>Último acesso</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="corpoTabelaUsuarios">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="mensagemSemUsuarios"
+                        class="mensagem-sem-resultados"
+                    >
+                        Nenhum usuário foi encontrado.
+                    </div>
+
+                </section>
+
+                <!-- MODAL DE USUÁRIO -->
+
+                <div
+                    id="modalUsuario"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalUsuario"
+                    >
+
+                        <div class="modal-cabecalho">
+
+                            <div>
+                                <p class="pagina-etiqueta">
+                                    CADASTRO
+                                </p>
+
+                                <h2 id="tituloModalUsuario">
+                                    Novo usuário
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="botao-fechar-modal"
+                                id="botaoFecharUsuario"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                        <form id="formUsuario" novalidate>
+
+                            <div class="grade-formulario">
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="nomeUsuario">
+                                        Nome completo
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="nomeUsuario"
+                                        placeholder="Digite o nome completo"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroNomeUsuario"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="emailUsuario">
+                                        E-mail
+                                    </label>
+
+                                    <input
+                                        type="email"
+                                        id="emailUsuario"
+                                        placeholder="usuario@empresa.com"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroEmailUsuario"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="perfilUsuario">
+                                        Perfil
+                                    </label>
+
+                                    <select id="perfilUsuario">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="administrador">
+                                            Administrador
+                                        </option>
+
+                                        <option value="gestor">
+                                            Gestor
+                                        </option>
+
+                                        <option value="colaborador">
+                                            Colaborador
+                                        </option>
+
+                                        <option value="auditor">
+                                            Auditor
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroPerfilUsuario"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="departamentoUsuario">
+                                        Departamento
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="departamentoUsuario"
+                                        placeholder="Ex.: Engenharia"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroDepartamentoUsuario"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="situacaoUsuario">
+                                        Situação
+                                    </label>
+
+                                    <select id="situacaoUsuario">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="ativo">
+                                            Ativo
+                                        </option>
+
+                                        <option value="inativo">
+                                            Inativo
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroSituacaoUsuario"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="senhaUsuario">
+                                        Senha provisória
+                                    </label>
+
+                                    <input
+                                        type="password"
+                                        id="senhaUsuario"
+                                        placeholder="Mínimo de 6 caracteres"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroSenhaUsuario"
+                                    ></small>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao-secundario"
+                                    id="botaoCancelarUsuario"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Salvar usuário
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+                <div
+                    id="mensagemNotificacao"
+                    class="aviso-flutuante"
+                    aria-live="polite"
+                ></div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/usuarios.js"></script>
+    <script src="/js/sessao.js"></script>
+    <script src="/js/dashboard.js"></script>
+
+</body>
+</html>

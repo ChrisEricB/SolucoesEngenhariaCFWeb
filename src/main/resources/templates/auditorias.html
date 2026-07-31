@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Auditorias | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-sistema">
+
+    <div class="layout-sistema">
+
+        <aside class="menu-lateral">
+
+            <div class="menu-marca">
+
+                <div class="menu-marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <strong>Soluções Engenharia</strong>
+                    <span>Gestão integrada</span>
+                </div>
+
+            </div>
+
+            <nav class="menu-navegacao">
+
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icone">▦</span>
+                    Dashboard
+                </a>
+
+                <a href="projetos.html" class="menu-item">
+                    <span class="menu-icone">▣</span>
+                    Projetos
+                </a>
+
+                <a href="auditorias.html" class="menu-item ativo">
+                    <span class="menu-icone">✓</span>
+                    Auditorias
+                </a>
+
+                <a href="checklists.html" class="menu-item">
+                    <span class="menu-icone">☷</span>
+                    Checklists
+                </a>
+
+                <a href="documentos.html" class="menu-item">
+                    <span class="menu-icone">▤</span>
+                    Documentos
+                </a>
+
+                <a href="usuarios.html" class="menu-item">
+                    <span class="menu-icone">●</span>
+                    Usuários
+                </a>
+
+            </nav>
+
+            <div class="menu-rodape">
+
+                <div class="usuario-resumo">
+
+                    <div class="usuario-avatar">
+                        CB
+                    </div>
+
+                    <div>
+                        <strong data-usuario-nome>
+                        Usuário
+                        </strong>
+
+                        <span data-usuario-perfil>
+                        Perfil
+                        </span>
+                                                                      
+                    </div>
+
+                </div>
+
+                 <a href="#" 
+                   id="botaoSair"
+                   class="botao-sair">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <div class="conteudo-sistema">
+
+            <header class="barra-superior">
+
+                <button
+                    type="button"
+                    id="botaoMenu"
+                    class="botao-menu-mobile"
+                    aria-label="Abrir ou fechar menu"
+                >
+                    ☰
+                </button>
+
+                <div class="barra-pesquisa">
+
+                    <label for="pesquisaAuditoria">
+                        Pesquisar
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaAuditoria"
+                        placeholder="Pesquisar auditorias ou não conformidades..."
+                    >
+
+                </div>
+
+                <div class="barra-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-notificacao"
+                        id="botaoNotificacao"
+                        aria-label="Exibir notificações"
+                    >
+                        🔔
+                        <span>3</span>
+                    </button>
+
+                    <div class="data-atual" id="dataAtual"></div>
+
+                </div>
+
+            </header>
+
+            <main class="conteudo-principal">
+
+                <section class="cabecalho-pagina">
+
+                    <div>
+                        <p class="pagina-etiqueta">
+                            QUALIDADE
+                        </p>
+
+                        <h1>Auditorias e não conformidades</h1>
+
+                        <p>
+                            Planeje auditorias e acompanhe
+                            as ocorrências identificadas.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-acao"
+                        id="botaoNovaAuditoria"
+                    >
+                        + Nova auditoria
+                    </button>
+
+                </section>
+
+                <nav class="abas-pagina">
+
+                    <button
+                        type="button"
+                        class="aba-botao ativa"
+                        data-aba="auditorias"
+                    >
+                        Auditorias
+                    </button>
+
+                    <button
+                        type="button"
+                        class="aba-botao"
+                        data-aba="naoConformidades"
+                    >
+                        Não conformidades
+                    </button>
+
+                </nav>
+
+                <!-- ABA AUDITORIAS -->
+
+                <section
+                    id="abaAuditorias"
+                    class="secao-aba ativa"
+                >
+
+                    <section class="grade-indicadores indicadores-auditoria">
+
+                        <article class="cartao-indicador">
+
+                            <div class="indicador-topo">
+                                <span>Planejadas</span>
+                                <span class="indicador-icone azul">✓</span>
+                            </div>
+
+                            <strong>4</strong>
+
+                            <p>Auditorias programadas</p>
+
+                        </article>
+
+                        <article class="cartao-indicador">
+
+                            <div class="indicador-topo">
+                                <span>Em andamento</span>
+                                <span class="indicador-icone amarelo">◷</span>
+                            </div>
+
+                            <strong>2</strong>
+
+                            <p>Auditorias em execução</p>
+
+                        </article>
+
+                        <article class="cartao-indicador">
+
+                            <div class="indicador-topo">
+                                <span>Concluídas</span>
+                                <span class="indicador-icone verde">✓</span>
+                            </div>
+
+                            <strong>9</strong>
+
+                            <p>Auditorias finalizadas</p>
+
+                        </article>
+
+                        <article class="cartao-indicador">
+
+                            <div class="indicador-topo">
+                                <span>Pendências</span>
+                                <span class="indicador-icone vermelho">!</span>
+                            </div>
+
+                            <strong>3</strong>
+
+                            <p>Pontos a verificar</p>
+
+                        </article>
+
+                    </section>
+
+                    <section class="painel-filtros">
+
+                        <div class="campo-filtro">
+
+                            <label for="filtroStatusAuditoria">
+                                Status
+                            </label>
+
+                            <select id="filtroStatusAuditoria">
+
+                                <option value="todos">
+                                    Todos os status
+                                </option>
+
+                                <option value="planejada">
+                                    Planejada
+                                </option>
+
+                                <option value="andamento">
+                                    Em andamento
+                                </option>
+
+                                <option value="concluida">
+                                    Concluída
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="campo-filtro">
+
+                            <label for="filtroTipoAuditoria">
+                                Tipo
+                            </label>
+
+                            <select id="filtroTipoAuditoria">
+
+                                <option value="todos">
+                                    Todos os tipos
+                                </option>
+
+                                <option value="interna">
+                                    Interna
+                                </option>
+
+                                <option value="externa">
+                                    Externa
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="botao-secundario"
+                            id="botaoLimparFiltrosAuditoria"
+                        >
+                            Limpar filtros
+                        </button>
+
+                    </section>
+
+                    <section class="painel-listagem">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h2>Auditorias cadastradas</h2>
+
+                                <p id="quantidadeAuditorias">
+                                    4 auditorias encontradas
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="tabela-responsiva">
+
+                            <table class="tabela-sistema">
+
+                                <thead>
+                                    <tr>
+                                        <th>Auditoria</th>
+                                        <th>Projeto</th>
+                                        <th>Tipo</th>
+                                        <th>Data</th>
+                                        <th>Status</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="corpoTabelaAuditorias">
+
+                                    <tr
+                                        data-status="planejada"
+                                        data-tipo="interna"
+                                    >
+                                        <td>
+                                            <strong>Auditoria de qualidade</strong>
+                                            <span>ISO 9001</span>
+                                        </td>
+
+                                        <td>Projeto Solar</td>
+                                        <td>Interna</td>
+                                        <td>30/07/2026</td>
+
+                                        <td>
+                                            <span class="status planejamento">
+                                                Planejada
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="acoes-tabela">
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela visualizar"
+                                                >
+                                                    Visualizar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela editar"
+                                                >
+                                                    Editar
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-status="andamento"
+                                        data-tipo="externa"
+                                    >
+                                        <td>
+                                            <strong>Auditoria ambiental</strong>
+                                            <span>ISO 14001</span>
+                                        </td>
+
+                                        <td>Ampliação industrial</td>
+                                        <td>Externa</td>
+                                        <td>25/07/2026</td>
+
+                                        <td>
+                                            <span class="status andamento">
+                                                Em andamento
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="acoes-tabela">
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela visualizar"
+                                                >
+                                                    Visualizar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela editar"
+                                                >
+                                                    Editar
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-status="concluida"
+                                        data-tipo="interna"
+                                    >
+                                        <td>
+                                            <strong>Auditoria de segurança</strong>
+                                            <span>Procedimentos internos</span>
+                                        </td>
+
+                                        <td>Modernização da fábrica</td>
+                                        <td>Interna</td>
+                                        <td>12/06/2026</td>
+
+                                        <td>
+                                            <span class="status concluido">
+                                                Concluída
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="acoes-tabela">
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela visualizar"
+                                                >
+                                                    Visualizar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela editar"
+                                                >
+                                                    Editar
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-status="planejada"
+                                        data-tipo="externa"
+                                    >
+                                        <td>
+                                            <strong>Auditoria documental</strong>
+                                            <span>Controle de registros</span>
+                                        </td>
+
+                                        <td>Auditoria ISO 9001</td>
+                                        <td>Externa</td>
+                                        <td>08/08/2026</td>
+
+                                        <td>
+                                            <span class="status planejamento">
+                                                Planejada
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <div class="acoes-tabela">
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela visualizar"
+                                                >
+                                                    Visualizar
+                                                </button>
+
+                                                <button
+                                                    type="button"
+                                                    class="botao-tabela editar"
+                                                >
+                                                    Editar
+                                                </button>
+
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div
+                            id="mensagemSemAuditorias"
+                            class="mensagem-sem-resultados"
+                        >
+                            Nenhuma auditoria foi encontrada.
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <!-- ABA NÃO CONFORMIDADES -->
+
+                <section
+                    id="abaNaoConformidades"
+                    class="secao-aba"
+                >
+
+                    <section class="cabecalho-interno">
+
+                        <div>
+                            <h2>Não conformidades registradas</h2>
+
+                            <p>
+                                Controle os problemas identificados
+                                durante auditorias e inspeções.
+                            </p>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="botao-acao"
+                            id="botaoNovaNaoConformidade"
+                        >
+                            + Nova não conformidade
+                        </button>
+
+                    </section>
+
+                    <section class="painel-filtros">
+
+                        <div class="campo-filtro">
+
+                            <label for="filtroSituacaoNc">
+                                Situação
+                            </label>
+
+                            <select id="filtroSituacaoNc">
+
+                                <option value="todos">
+                                    Todas as situações
+                                </option>
+
+                                <option value="aberta">
+                                    Aberta
+                                </option>
+
+                                <option value="tratamento">
+                                    Em tratamento
+                                </option>
+
+                                <option value="resolvida">
+                                    Resolvida
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="campo-filtro">
+
+                            <label for="filtroGravidadeNc">
+                                Gravidade
+                            </label>
+
+                            <select id="filtroGravidadeNc">
+
+                                <option value="todos">
+                                    Todas as gravidades
+                                </option>
+
+                                <option value="baixa">
+                                    Baixa
+                                </option>
+
+                                <option value="media">
+                                    Média
+                                </option>
+
+                                <option value="alta">
+                                    Alta
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <button
+                            type="button"
+                            class="botao-secundario"
+                            id="botaoLimparFiltrosNc"
+                        >
+                            Limpar filtros
+                        </button>
+
+                    </section>
+
+                    <section class="painel-listagem">
+
+                        <div class="painel-cabecalho">
+
+                            <div>
+                                <h2>Ocorrências</h2>
+
+                                <p id="quantidadeNc">
+                                    4 ocorrências encontradas
+                                </p>
+                            </div>
+
+                        </div>
+
+                        <div class="tabela-responsiva">
+
+                            <table class="tabela-sistema">
+
+                                <thead>
+                                    <tr>
+                                        <th>Não conformidade</th>
+                                        <th>Origem</th>
+                                        <th>Gravidade</th>
+                                        <th>Prazo</th>
+                                        <th>Situação</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody id="corpoTabelaNc">
+
+                                    <tr
+                                        data-situacao="aberta"
+                                        data-gravidade="alta"
+                                    >
+                                        <td>
+                                            <strong>Documento desatualizado</strong>
+                                            <span>NC-001</span>
+                                        </td>
+
+                                        <td>Auditoria de qualidade</td>
+
+                                        <td>
+                                            <span class="gravidade alta">
+                                                Alta
+                                            </span>
+                                        </td>
+
+                                        <td>05/08/2026</td>
+
+                                        <td>
+                                            <span class="status pendente">
+                                                Aberta
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar"
+                                            >
+                                                Visualizar
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-situacao="tratamento"
+                                        data-gravidade="media"
+                                    >
+                                        <td>
+                                            <strong>Falha no registro de inspeção</strong>
+                                            <span>NC-002</span>
+                                        </td>
+
+                                        <td>Auditoria ambiental</td>
+
+                                        <td>
+                                            <span class="gravidade media">
+                                                Média
+                                            </span>
+                                        </td>
+
+                                        <td>10/08/2026</td>
+
+                                        <td>
+                                            <span class="status andamento">
+                                                Em tratamento
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar"
+                                            >
+                                                Visualizar
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-situacao="resolvida"
+                                        data-gravidade="baixa"
+                                    >
+                                        <td>
+                                            <strong>Identificação incompleta</strong>
+                                            <span>NC-003</span>
+                                        </td>
+
+                                        <td>Auditoria de segurança</td>
+
+                                        <td>
+                                            <span class="gravidade baixa">
+                                                Baixa
+                                            </span>
+                                        </td>
+
+                                        <td>18/06/2026</td>
+
+                                        <td>
+                                            <span class="status concluido">
+                                                Resolvida
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar"
+                                            >
+                                                Visualizar
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                    <tr
+                                        data-situacao="aberta"
+                                        data-gravidade="media"
+                                    >
+                                        <td>
+                                            <strong>Ausência de assinatura</strong>
+                                            <span>NC-004</span>
+                                        </td>
+
+                                        <td>Auditoria documental</td>
+
+                                        <td>
+                                            <span class="gravidade media">
+                                                Média
+                                            </span>
+                                        </td>
+
+                                        <td>15/08/2026</td>
+
+                                        <td>
+                                            <span class="status pendente">
+                                                Aberta
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar"
+                                            >
+                                                Visualizar
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                        <div
+                            id="mensagemSemNc"
+                            class="mensagem-sem-resultados"
+                        >
+                            Nenhuma não conformidade foi encontrada.
+                        </div>
+
+                    </section>
+
+                </section>
+
+                <!-- MODAL AUDITORIA -->
+
+                <div
+                    id="modalAuditoria"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalAuditoria"
+                    >
+
+                        <div class="modal-cabecalho">
+
+                            <div>
+                                <p class="pagina-etiqueta">
+                                    CADASTRO
+                                </p>
+
+                                <h2 id="tituloModalAuditoria">
+                                    Nova auditoria
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="botao-fechar-modal"
+                                id="botaoFecharAuditoria"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                        <form id="formAuditoria" novalidate>
+
+                            <div class="grade-formulario">
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="nomeAuditoria">
+                                        Nome da auditoria
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="nomeAuditoria"
+                                        placeholder="Digite o nome da auditoria"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroNomeAuditoria"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="projetoAuditoria">
+                                        Projeto
+                                    </label>
+
+                                    <select id="projetoAuditoria">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="Projeto Solar">
+                                            Projeto Solar
+                                        </option>
+
+                                        <option value="Ampliação industrial">
+                                            Ampliação industrial
+                                        </option>
+
+                                        <option value="Modernização da fábrica">
+                                            Modernização da fábrica
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroProjetoAuditoria"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="tipoAuditoria">
+                                        Tipo
+                                    </label>
+
+                                    <select id="tipoAuditoria">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="interna">
+                                            Interna
+                                        </option>
+
+                                        <option value="externa">
+                                            Externa
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTipoAuditoria"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="dataAuditoria">
+                                        Data
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="dataAuditoria"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroDataAuditoria"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="statusAuditoria">
+                                        Status
+                                    </label>
+
+                                    <select id="statusAuditoria">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="planejada">
+                                            Planejada
+                                        </option>
+
+                                        <option value="andamento">
+                                            Em andamento
+                                        </option>
+
+                                        <option value="concluida">
+                                            Concluída
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroStatusAuditoria"
+                                    ></small>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao-secundario"
+                                    id="botaoCancelarAuditoria"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Salvar auditoria
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+                <div
+                    id="mensagemNotificacao"
+                    class="aviso-flutuante"
+                    aria-live="polite"
+                ></div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/auditorias.js"></script>
+    <script src="/js/sessao.js"></script>
+    <script src="/js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Documentos | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-sistema">
+
+    <div class="layout-sistema">
+
+        <aside class="menu-lateral">
+
+            <div class="menu-marca">
+
+                <div class="menu-marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <strong>Soluções Engenharia</strong>
+                    <span>Gestão integrada</span>
+                </div>
+
+            </div>
+
+            <nav class="menu-navegacao">
+
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icone">▦</span>
+                    Dashboard
+                </a>
+
+                <a href="projetos.html" class="menu-item">
+                    <span class="menu-icone">▣</span>
+                    Projetos
+                </a>
+
+                <a href="auditorias.html" class="menu-item">
+                    <span class="menu-icone">✓</span>
+                    Auditorias
+                </a>
+
+                <a href="checklists.html" class="menu-item">
+                    <span class="menu-icone">☷</span>
+                    Checklists
+                </a>
+
+                <a href="documentos.html" class="menu-item ativo">
+                    <span class="menu-icone">▤</span>
+                    Documentos
+                </a>
+
+                <a href="usuarios.html" class="menu-item">
+                    <span class="menu-icone">●</span>
+                    Usuários
+                </a>
+
+            </nav>
+
+            <div class="menu-rodape">
+
+                <div class="usuario-resumo">
+
+                    <div class="usuario-avatar">
+                        CB
+                    </div>
+
+                     <div>
+                        <strong data-usuario-nome>
+                        Usuário
+                        </strong>
+
+                        <span data-usuario-perfil>
+                        Perfil
+                        </span>
+                                                                      
+                    </div>
+
+                </div>
+
+                 <a href="#" 
+                   id="botaoSair"
+                   class="botao-sair">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <div class="conteudo-sistema">
+
+            <header class="barra-superior">
+
+                <button
+                    type="button"
+                    id="botaoMenu"
+                    class="botao-menu-mobile"
+                    aria-label="Abrir ou fechar menu"
+                >
+                    ☰
+                </button>
+
+                <div class="barra-pesquisa">
+
+                    <label for="pesquisaDocumento">
+                        Pesquisar documentos
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaDocumento"
+                        placeholder="Pesquisar por nome ou projeto..."
+                    >
+
+                </div>
+
+                <div class="barra-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-notificacao"
+                        id="botaoNotificacao"
+                        aria-label="Exibir notificações"
+                    >
+                        🔔
+                        <span>3</span>
+                    </button>
+
+                    <div class="data-atual" id="dataAtual"></div>
+
+                </div>
+
+            </header>
+
+            <main class="conteudo-principal">
+
+                <section class="cabecalho-pagina">
+
+                    <div>
+                        <p class="pagina-etiqueta">
+                            ARQUIVOS
+                        </p>
+
+                        <h1>Documentos</h1>
+
+                        <p>
+                            Consulte e organize os arquivos
+                            relacionados aos projetos.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-acao"
+                        id="botaoNovoDocumento"
+                    >
+                        + Enviar documento
+                    </button>
+
+                </section>
+
+                <section class="grade-indicadores indicadores-documentos">
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Total de documentos</span>
+                            <span class="indicador-icone azul">▤</span>
+                        </div>
+
+                        <strong id="totalDocumentos">5</strong>
+
+                        <p>Arquivos cadastrados</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Documentos PDF</span>
+                            <span class="indicador-icone vermelho">PDF</span>
+                        </div>
+
+                        <strong id="totalPdf">3</strong>
+
+                        <p>Arquivos em formato PDF</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Planilhas</span>
+                            <span class="indicador-icone verde">XLS</span>
+                        </div>
+
+                        <strong id="totalPlanilhas">1</strong>
+
+                        <p>Arquivos de controle</p>
+
+                    </article>
+
+                    <article class="cartao-indicador">
+
+                        <div class="indicador-topo">
+                            <span>Outros formatos</span>
+                            <span class="indicador-icone amarelo">DOC</span>
+                        </div>
+
+                        <strong id="totalOutros">1</strong>
+
+                        <p>Documentos complementares</p>
+
+                    </article>
+
+                </section>
+
+                <section class="painel-filtros">
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroTipoDocumento">
+                            Tipo de arquivo
+                        </label>
+
+                        <select id="filtroTipoDocumento">
+
+                            <option value="todos">
+                                Todos os tipos
+                            </option>
+
+                            <option value="pdf">
+                                PDF
+                            </option>
+
+                            <option value="planilha">
+                                Planilha
+                            </option>
+
+                            <option value="documento">
+                                Documento de texto
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroProjetoDocumento">
+                            Projeto
+                        </label>
+
+                        <select id="filtroProjetoDocumento">
+
+                            <option value="todos">
+                                Todos os projetos
+                            </option>
+
+                            <option value="solar">
+                                Projeto Solar
+                            </option>
+
+                            <option value="ampliacao">
+                                Ampliação industrial
+                            </option>
+
+                            <option value="modernizacao">
+                                Modernização da fábrica
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-secundario"
+                        id="botaoLimparFiltrosDocumento"
+                    >
+                        Limpar filtros
+                    </button>
+
+                </section>
+
+                <section class="painel-listagem">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h2>Arquivos cadastrados</h2>
+
+                            <p id="quantidadeDocumentos">
+                                5 documentos encontrados
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="tabela-responsiva">
+
+                        <table class="tabela-sistema tabela-documentos">
+
+                            <thead>
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Projeto</th>
+                                    <th>Tipo</th>
+                                    <th>Enviado por</th>
+                                    <th>Data</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="corpoTabelaDocumentos">
+
+                                <tr
+                                    data-tipo="pdf"
+                                    data-projeto="solar"
+                                >
+                                    <td>
+                                        <div class="documento-identificacao">
+
+                                            <span class="documento-icone pdf">
+                                                PDF
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Relatório técnico solar
+                                                </strong>
+
+                                                <span>
+                                                    relatorio_solar.pdf
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>Projeto Solar</td>
+                                    <td>PDF</td>
+                                    <td>Fihama Santos</td>
+                                    <td>25/07/2026</td>
+
+                                    <td>
+                                        <div class="acoes-tabela">
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar-documento"
+                                            >
+                                                Visualizar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela excluir-documento"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    data-tipo="planilha"
+                                    data-projeto="ampliacao"
+                                >
+                                    <td>
+                                        <div class="documento-identificacao">
+
+                                            <span class="documento-icone planilha">
+                                                XLS
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Controle de orçamento
+                                                </strong>
+
+                                                <span>
+                                                    orcamento_ampliacao.xlsx
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>Ampliação industrial</td>
+                                    <td>Planilha</td>
+                                    <td>Christian Barrantes</td>
+                                    <td>22/07/2026</td>
+
+                                    <td>
+                                        <div class="acoes-tabela">
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar-documento"
+                                            >
+                                                Visualizar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela excluir-documento"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    data-tipo="pdf"
+                                    data-projeto="modernizacao"
+                                >
+                                    <td>
+                                        <div class="documento-identificacao">
+
+                                            <span class="documento-icone pdf">
+                                                PDF
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Laudo de segurança
+                                                </strong>
+
+                                                <span>
+                                                    laudo_seguranca.pdf
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>Modernização da fábrica</td>
+                                    <td>PDF</td>
+                                    <td>Carlos Barrantes</td>
+                                    <td>18/07/2026</td>
+
+                                    <td>
+                                        <div class="acoes-tabela">
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar-documento"
+                                            >
+                                                Visualizar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela excluir-documento"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    data-tipo="documento"
+                                    data-projeto="solar"
+                                >
+                                    <td>
+                                        <div class="documento-identificacao">
+
+                                            <span class="documento-icone texto">
+                                                DOC
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Plano de atividades
+                                                </strong>
+
+                                                <span>
+                                                    plano_atividades.docx
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>Projeto Solar</td>
+                                    <td>Documento</td>
+                                    <td>Christian Barrantes</td>
+                                    <td>15/07/2026</td>
+
+                                    <td>
+                                        <div class="acoes-tabela">
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar-documento"
+                                            >
+                                                Visualizar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela excluir-documento"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                <tr
+                                    data-tipo="pdf"
+                                    data-projeto="ampliacao"
+                                >
+                                    <td>
+                                        <div class="documento-identificacao">
+
+                                            <span class="documento-icone pdf">
+                                                PDF
+                                            </span>
+
+                                            <div>
+                                                <strong>
+                                                    Relatório de auditoria
+                                                </strong>
+
+                                                <span>
+                                                    auditoria_industrial.pdf
+                                                </span>
+                                            </div>
+
+                                        </div>
+                                    </td>
+
+                                    <td>Ampliação industrial</td>
+                                    <td>PDF</td>
+                                    <td>Fihama Santos</td>
+                                    <td>10/07/2026</td>
+
+                                    <td>
+                                        <div class="acoes-tabela">
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela visualizar-documento"
+                                            >
+                                                Visualizar
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                class="botao-tabela excluir-documento"
+                                            >
+                                                Excluir
+                                            </button>
+
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="mensagemSemDocumentos"
+                        class="mensagem-sem-resultados"
+                    >
+                        Nenhum documento foi encontrado.
+                    </div>
+
+                </section>
+
+                <!-- MODAL DE ENVIO -->
+
+                <div
+                    id="modalDocumento"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalDocumento"
+                    >
+
+                        <div class="modal-cabecalho">
+
+                            <div>
+                                <p class="pagina-etiqueta">
+                                    NOVO ARQUIVO
+                                </p>
+
+                                <h2 id="tituloModalDocumento">
+                                    Enviar documento
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                class="botao-fechar-modal"
+                                id="botaoFecharDocumento"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                        <form id="formDocumento" novalidate>
+
+                            <div class="grade-formulario">
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="tituloDocumento">
+                                        Título do documento
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="tituloDocumento"
+                                        placeholder="Digite um título"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTituloDocumento"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="projetoDocumento">
+                                        Projeto
+                                    </label>
+
+                                    <select id="projetoDocumento">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="solar">
+                                            Projeto Solar
+                                        </option>
+
+                                        <option value="ampliacao">
+                                            Ampliação industrial
+                                        </option>
+
+                                        <option value="modernizacao">
+                                            Modernização da fábrica
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroProjetoDocumento"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="tipoDocumento">
+                                        Tipo
+                                    </label>
+
+                                    <select id="tipoDocumento">
+
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="pdf">
+                                            PDF
+                                        </option>
+
+                                        <option value="planilha">
+                                            Planilha
+                                        </option>
+
+                                        <option value="documento">
+                                            Documento de texto
+                                        </option>
+
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroTipoDocumento"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="arquivoDocumento">
+                                        Selecionar arquivo
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="arquivoDocumento"
+                                        accept=".pdf,.doc,.docx,.xls,.xlsx"
+                                    >
+
+                                    <small class="ajuda-campo">
+                                        Formatos permitidos: PDF, DOC, DOCX,
+                                        XLS e XLSX.
+                                    </small>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroArquivoDocumento"
+                                    ></small>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-acoes">
+
+                                <button
+                                    type="button"
+                                    class="botao-secundario"
+                                    id="botaoCancelarDocumento"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Enviar documento
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+                <div
+                    id="mensagemNotificacao"
+                    class="aviso-flutuante"
+                    aria-live="polite"
+                ></div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/documentos.js"></script>
+    <script src="/js/sessao.js"></script>
+    <script src="/js/dashboard.js"></script>
+    
+</body>
+</html>

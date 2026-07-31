@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Login | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-login">
+
+    <main class="login-container">
+
+        <section class="login-apresentacao">
+
+            <div class="marca">
+
+                <div class="marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <h1>Soluções Engenharia C&F</h1>
+
+                    <p>
+                        Gestão de projetos, auditorias e
+                        não conformidades.
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="apresentacao-conteudo">
+
+                <h2>
+                    Engenharia com organização,
+                    qualidade e controle.
+                </h2>
+
+                <p>
+                    Centralize informações, acompanhe prazos
+                    e mantenha o histórico dos seus projetos
+                    em um único sistema.
+                </p>
+
+                <div class="lista-beneficios">
+
+                    <div class="beneficio">
+                        <span>✓</span>
+                        <p>Controle de projetos</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <span>✓</span>
+                        <p>Acompanhamento de auditorias</p>
+                    </div>
+
+                    <div class="beneficio">
+                        <span>✓</span>
+                        <p>Gestão de não conformidades</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="login-area">
+
+            <div class="login-card">
+
+                <div class="login-cabecalho">
+
+                    <p class="login-etiqueta">
+                        ACESSO AO SISTEMA
+                    </p>
+
+                    <h2>Bem-vindo</h2>
+
+                    <p>
+                        Informe seus dados para acessar
+                        o sistema.
+                    </p>
+
+		<div class="acesso-demonstracao">
+   			
+		        <strong>Acesso para demonstração</strong>
+	
+  			  <span>E-mail: professor@avaliacao.com</span>
+ 			  <span>Senha: 123456</span>
+		</div>
+
+                </div>
+
+                <form id="formLogin" novalidate>
+
+                    <div class="campo-formulario">
+
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="usuario@empresa.com"
+                            autocomplete="email"
+                        >
+
+                        <small
+                            class="mensagem-erro"
+                            id="erroEmail"
+                        ></small>
+
+                    </div>
+
+                    <div class="campo-formulario">
+
+                        <label for="senha">
+                            Senha
+                        </label>
+
+                        <div class="campo-senha">
+
+                            <input
+                                type="password"
+                                id="senha"
+                                name="senha"
+                                placeholder="Digite sua senha"
+                                autocomplete="current-password"
+                            >
+
+                            <button
+                                type="button"
+                                id="botaoMostrarSenha"
+                                class="botao-mostrar-senha"
+                                aria-label="Mostrar senha"
+                            >
+                                Mostrar
+                            </button>
+
+                        </div>
+
+                        <small
+                            class="mensagem-erro"
+                            id="erroSenha"
+                        ></small>
+
+                    </div>
+
+                    <div class="opcoes-login">
+
+                        <label class="lembrar-acesso">
+
+                            <input
+                                type="checkbox"
+                                id="lembrar"
+                                name="lembrar"
+                            >
+
+                            <span>Lembrar meu acesso</span>
+
+                        </label>
+
+                        <a href="#" id="linkRecuperarSenha">
+                            Esqueci minha senha
+                        </a>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="botao-principal"
+                    >
+                        Entrar
+                    </button>
+
+                    <div
+                        id="mensagemLogin"
+                        class="mensagem-login"
+                        aria-live="polite"
+                    ></div>
+
+                </form>
+
+                <p class="login-rodape">
+                    Sistema acadêmico de gestão de engenharia
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <script src="js/login.js"></script>
+
+</body>
+</html>

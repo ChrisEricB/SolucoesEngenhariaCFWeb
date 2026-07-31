@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Projetos | Soluções Engenharia C&F</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-sistema">
+
+    <div class="layout-sistema">
+
+        <aside class="menu-lateral">
+
+            <div class="menu-marca">
+
+                <div class="menu-marca-simbolo">
+                    C&F
+                </div>
+
+                <div>
+                    <strong>Soluções Engenharia</strong>
+                    <span>Gestão integrada</span>
+                </div>
+
+            </div>
+
+            <nav class="menu-navegacao">
+
+                <a href="dashboard.html" class="menu-item">
+                    <span class="menu-icone">▦</span>
+                    Dashboard
+                </a>
+
+                <a href="projetos.html" class="menu-item ativo">
+                    <span class="menu-icone">▣</span>
+                    Projetos
+                </a>
+
+                <a href="auditorias.html" class="menu-item">
+                    <span class="menu-icone">✓</span>
+                    Auditorias
+                </a>
+
+                <a href="checklists.html" class="menu-item">
+                    <span class="menu-icone">☷</span>
+                    Checklists
+                </a>
+
+                <a href="documentos.html" class="menu-item">
+                    <span class="menu-icone">▤</span>
+                    Documentos
+                </a>
+
+                <a href="usuarios.html" class="menu-item">
+                    <span class="menu-icone">●</span>
+                    Usuários
+                </a>
+
+            </nav>
+
+            <div class="menu-rodape">
+
+                <div class="usuario-resumo">
+
+                    <div class="usuario-avatar">
+                        CB
+                    </div>
+
+                     <div>
+                        <strong data-usuario-nome>
+                        Usuário
+                        </strong>
+
+                        <span data-usuario-perfil>
+                        Perfil
+                        </span>
+                                                                      
+                    </div>
+
+                </div>
+
+                 <a href="#" 
+                   id="botaoSair"
+                   class="botao-sair">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <div class="conteudo-sistema">
+
+            <header class="barra-superior">
+
+                <button
+                    type="button"
+                    id="botaoMenu"
+                    class="botao-menu-mobile"
+                    aria-label="Abrir ou fechar menu"
+                >
+                    ☰
+                </button>
+
+                <div class="barra-pesquisa">
+
+                    <label for="pesquisaProjeto">
+                        Pesquisar projetos
+                    </label>
+
+                    <input
+                        type="search"
+                        id="pesquisaProjeto"
+                        placeholder="Pesquisar por nome ou responsável..."
+                    >
+
+                </div>
+
+                <div class="barra-acoes">
+
+                    <button
+                        type="button"
+                        class="botao-notificacao"
+                        id="botaoNotificacao"
+                        aria-label="Exibir notificações"
+                    >
+                        🔔
+                        <span>3</span>
+                    </button>
+
+                    <div class="data-atual" id="dataAtual"></div>
+
+                </div>
+
+            </header>
+
+            <main class="conteudo-principal">
+
+                <section class="cabecalho-pagina">
+
+                    <div>
+                        <p class="pagina-etiqueta">
+                            GESTÃO
+                        </p>
+
+                        <h1>Projetos</h1>
+
+                        <p>
+                            Cadastre, consulte e acompanhe os
+                            projetos de engenharia.
+                        </p>
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-acao"
+                        id="botaoAbrirFormulario"
+                    >
+                        + Novo projeto
+                    </button>
+
+                </section>
+
+                <section class="painel-filtros">
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroStatus">
+                            Status
+                        </label>
+
+                        <select id="filtroStatus">
+                            <option value="todos">
+                                Todos os status
+                            </option>
+
+                            <option value="planejamento">
+                                Planejamento
+                            </option>
+
+                            <option value="andamento">
+                                Em andamento
+                            </option>
+
+                            <option value="concluido">
+                                Concluído
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <div class="campo-filtro">
+
+                        <label for="filtroResponsavel">
+                            Responsável
+                        </label>
+
+                        <select id="filtroResponsavel">
+                            <option value="todos">
+                                Todos os responsáveis
+                            </option>
+
+                            <option value="christian">
+                                Christian Barrantes
+                            </option>
+
+                            <option value="fihama">
+                                Fihama Santos
+                            </option>
+
+                            <option value="carlos">
+                                Carlos Barrantes
+                            </option>
+                        </select>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        class="botao-secundario"
+                        id="botaoLimparFiltros"
+                    >
+                        Limpar filtros
+                    </button>
+
+                </section>
+
+                <section class="painel-listagem">
+
+                    <div class="painel-cabecalho">
+
+                        <div>
+                            <h2>Projetos cadastrados</h2>
+
+                            <p id="quantidadeProjetos">
+                                Carregando projetos...
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class="tabela-responsiva">
+
+                        <table class="tabela-sistema">
+
+                            <thead>
+                                <tr>
+                                    <th>Projeto</th>
+                                    <th>Responsável</th>
+                                    <th>Início</th>
+                                    <th>Status</th>
+                                    <th>Progresso</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="corpoTabelaProjetos">
+
+                              
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                    <div
+                        id="mensagemSemProjetos"
+                        class="mensagem-sem-resultados"
+                    >
+                        Nenhum projeto foi encontrado.
+                    </div>
+
+                </section>
+
+                <div
+                    id="modalProjeto"
+                    class="modal"
+                    aria-hidden="true"
+                >
+
+                    <div class="modal-fundo"></div>
+
+                    <section
+                        class="modal-conteudo"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="tituloModalProjeto"
+                    >
+
+                        <div class="modal-cabecalho">
+
+                            <div>
+                                <p class="pagina-etiqueta">
+                                    CADASTRO
+                                </p>
+
+                                <h2 id="tituloModalProjeto">
+                                    Novo projeto
+                                </h2>
+                            </div>
+
+                            <button
+                                type="button"
+                                id="botaoFecharModal"
+                                class="botao-fechar-modal"
+                                aria-label="Fechar formulário"
+                            >
+                                ×
+                            </button>
+
+                        </div>
+
+                        <form id="formProjeto" novalidate>
+
+                            <div class="grade-formulario">
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="nomeProjeto">
+                                        Nome do projeto
+                                    </label>
+
+                                    <input
+                                        type="text"
+                                        id="nomeProjeto"
+                                        placeholder="Digite o nome do projeto"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroNomeProjeto"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="responsavelProjeto">
+                                        Responsável
+                                    </label>
+
+                                    <select id="responsavelProjeto">
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="Christian Barrantes">
+                                            Christian Barrantes
+                                        </option>
+
+                                        <option value="Fihama Santos">
+                                            Fihama Santos
+                                        </option>
+
+                                        <option value="Carlos Barrantes">
+                                            Carlos Barrantes
+                                        </option>
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroResponsavelProjeto"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="statusProjeto">
+                                        Status
+                                    </label>
+
+                                    <select id="statusProjeto">
+                                        <option value="">
+                                            Selecione
+                                        </option>
+
+                                        <option value="planejamento">
+                                            Planejamento
+                                        </option>
+
+                                        <option value="andamento">
+                                            Em andamento
+                                        </option>
+
+                                        <option value="concluido">
+                                            Concluído
+                                        </option>
+                                    </select>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroStatusProjeto"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="dataInicioProjeto">
+                                        Data de início
+                                    </label>
+
+                                    <input
+                                        type="date"
+                                        id="dataInicioProjeto"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroDataInicioProjeto"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario">
+
+                                    <label for="progressoProjeto">
+                                        Progresso (%)
+                                    </label>
+
+                                    <input
+                                        type="number"
+                                        id="progressoProjeto"
+                                        min="0"
+                                        max="100"
+                                        placeholder="0 a 100"
+                                    >
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroProgressoProjeto"
+                                    ></small>
+
+                                </div>
+
+                                <div class="campo-formulario campo-largo">
+
+                                    <label for="descricaoProjeto">
+                                        Descrição
+                                    </label>
+
+                                    <textarea
+                                        id="descricaoProjeto"
+                                        rows="4"
+                                        placeholder="Descreva o objetivo do projeto"
+                                    ></textarea>
+
+                                    <small
+                                        class="mensagem-erro"
+                                        id="erroDescricaoProjeto"
+                                    ></small>
+
+                                </div>
+
+                            </div>
+
+                            <div class="modal-acoes">
+
+                                <button
+                                    type="button"
+                                    id="botaoCancelarProjeto"
+                                    class="botao-secundario"
+                                >
+                                    Cancelar
+                                </button>
+
+                                <button
+                                    type="submit"
+                                    class="botao-acao"
+                                >
+                                    Salvar projeto
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </section>
+
+                </div>
+
+                <div
+                    id="mensagemNotificacao"
+                    class="aviso-flutuante"
+                    aria-live="polite"
+                ></div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <script src="js/projetos.js"></script>
+    <script src="/js/sessao.js"></script>
+    <script src="/js/dashboard.js"></script>
+    
+</body>
+</html>
